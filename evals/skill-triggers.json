@@ -1,0 +1,63 @@
+{
+  "create-cf-app": {
+    "positive": [
+      "Create a new TanStack Start app on Cloudflare with Mantine and D1.",
+      "Replace our old cf-app-starter workflow with a fresh CF repository.",
+      "Create a new app and ask me for its name and destination before making the directory.",
+      "Set up a new app in Guided builder mode for someone who wants agents to make routine technical decisions.",
+      "Create a Guided builder app whose ENGINE ROOM codeword requests one technical response."
+    ],
+    "negative": ["Add a button to this existing page."]
+  },
+  "maintain-cf-tooling": {
+    "positive": [
+      "Upgrade every CF dependency to the latest compatible stable version.",
+      "Replace ESLint and Prettier with type-aware Oxlint and Oxfmt."
+    ],
+    "negative": ["Add a customer table to D1."]
+  },
+  "build-cf-routes": {
+    "positive": [
+      "Add a protected TanStack route with loader-prefetched query data.",
+      "Move this mutation into a validated TanStack Start server function.",
+      "Warn about unsaved changes without writing a beforeunload listener."
+    ],
+    "negative": ["Change the Mantine theme primary color."]
+  },
+  "build-cf-ui": {
+    "positive": [
+      "Build a responsive Mantine AppShell with typed navigation.",
+      "Replace these loading spinners with stable Mantine skeletons.",
+      "Install Mantine notifications and show feedback after this mutation."
+    ],
+    "negative": ["Generate and apply a D1 migration."]
+  },
+  "build-cf-forms": {
+    "positive": [
+      "Build a Mantine signup form using TanStack Form and Zod.",
+      "Map server validation errors back to these TanStack Form fields."
+    ],
+    "negative": ["Build a read-only Mantine card grid."]
+  },
+  "manage-cf-data": {
+    "positive": [
+      "Add a Drizzle table and apply its migration to local D1.",
+      "Inspect and seed the local Wrangler D1 database."
+    ],
+    "negative": ["Deploy the Worker without changing its database."]
+  },
+  "integrate-cf-auth": {
+    "positive": [
+      "Add Better Auth with Drizzle to this TanStack Start app.",
+      "Protect this layout using the server-side Better Auth session."
+    ],
+    "negative": ["Add a domain permission check to an app without Better Auth."]
+  },
+  "deploy-cf-app": {
+    "positive": [
+      "Prepare this CF app for a production Cloudflare deployment.",
+      "Diagnose why the deployed Worker cannot see its D1 binding."
+    ],
+    "negative": ["Refactor this local form component."]
+  }
+}

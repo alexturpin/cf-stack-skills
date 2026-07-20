@@ -1,0 +1,4 @@
+interface:
+  display_name: "Maintain CF Tooling"
+  short_description: "Upgrade and validate the CF toolchain"
+  default_prompt: "Use $maintain-cf-tooling to upgrade and validate this project's CLI toolchain."

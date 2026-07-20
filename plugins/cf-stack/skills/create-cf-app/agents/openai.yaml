@@ -1,0 +1,4 @@
+interface:
+  display_name: "Create CF App"
+  short_description: "Scaffold the current CF application stack"
+  default_prompt: "Use $create-cf-app to scaffold a new TanStack Start application for Cloudflare."

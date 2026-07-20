@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build CF Routes"
+  short_description: "Build routes, loaders, and server functions"
+  default_prompt: "Use $build-cf-routes to implement this TanStack Start route and its data flow."

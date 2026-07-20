@@ -1,0 +1,15 @@
+{
+  "name": "cf-stack-skills",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Source marketplace for the CF Stack Codex plugin.",
+  "scripts": {
+    "validate": "node scripts/validate-repository.mjs",
+    "validate:links": "node scripts/check-links.mjs",
+    "validate:latest-stack": "node scripts/check-latest-stack.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

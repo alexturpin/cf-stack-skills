@@ -1,0 +1,20 @@
+{
+  "name": "cf-stack-skills",
+  "interface": {
+    "displayName": "CF Stack Skills"
+  },
+  "plugins": [
+    {
+      "name": "cf-stack",
+      "source": {
+        "source": "local",
+        "path": "./plugins/cf-stack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Integrate CF Auth"
+  short_description: "Integrate Better Auth with Drizzle and D1"
+  default_prompt: "Use $integrate-cf-auth to add or maintain authentication in this CF application."

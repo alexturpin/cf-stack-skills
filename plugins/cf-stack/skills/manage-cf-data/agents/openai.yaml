@@ -1,0 +1,4 @@
+interface:
+  display_name: "Manage CF Data"
+  short_description: "Manage Drizzle schemas and Cloudflare D1"
+  default_prompt: "Use $manage-cf-data to add this Drizzle schema and migrate Cloudflare D1 safely."

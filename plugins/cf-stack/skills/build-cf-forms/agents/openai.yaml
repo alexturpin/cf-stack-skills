@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build CF Forms"
+  short_description: "Build Mantine forms with TanStack Form"
+  default_prompt: "Use $build-cf-forms to implement this validated Mantine form with TanStack Form."
