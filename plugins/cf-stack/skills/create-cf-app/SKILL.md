@@ -85,9 +85,15 @@ Use latest stable releases together. If installation or validation reveals a pee
 
 1. Preserve the TanStack Intent setup produced by `--intent`.
 2. Inspect the installed Intent CLI before invoking its mapping/install command.
-3. Install Cloudflare's maintained skills through the locally installed Wrangler CLI after checking `wrangler --help` for `--install-skills`. Prefer a non-deploying command such as type generation.
+3. From the generated repository, install all Cloudflare-maintained skills at project scope using Cloudflare's documented Skills CLI flow. Check `npx skills add --help`, then run:
+
+   ```sh
+   npx skills add https://github.com/cloudflare/skills --all -y
+   ```
+
+   Do not pass `-g` or `--global`. Verify that the installer created project-local agent skill directories inside the generated repository.
 4. When auth is enabled, install Better Auth's maintained skills with its documented skills installer.
-5. Do not vendor Cloudflare, Better Auth, or TanStack reference skills into CF-owned skill folders.
+5. Let documented installers manage repository-local agent directories; do not copy upstream skill contents into custom CF skill folders.
 
 ## Apply the CF contract
 

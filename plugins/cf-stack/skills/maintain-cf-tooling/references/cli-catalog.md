@@ -3,6 +3,7 @@
 | CLI | Owns | Prefer |
 |---|---|---|
 | `tanstack` | Project creation, add-ons, docs search, docs fetch | JSON output and installed Intent knowledge |
+| `skills` | Project-local Agent Skills installation and updates | Documented upstream source URLs; omit `-g` and `--global` |
 | `wrangler` | Worker local runtime, bindings, D1 execution/migrations, types, logs, deploy | Local dependency and explicit environment flags |
 | `drizzle-kit` | Schema diff, SQL generation, migration consistency | `generate` and `check` for D1 |
 | `auth` | Better Auth schema generation, diagnostics, secrets | Current `auth@latest` command contract |
@@ -23,6 +24,6 @@
 
 - Use `tanstack create --list-add-ons --json` and `--addon-details` before selecting add-ons.
 - Use `tanstack search-docs` and `tanstack doc` before broad web lookup.
-- Use Wrangler's `--install-skills` support to install maintained Cloudflare agent guidance.
+- Use Cloudflare's documented `npx skills add https://github.com/cloudflare/skills --all -y` flow to install maintained guidance at project scope; do not pass `-g` or `--global`.
 - Use `auth info --json` when diagnosing Better Auth; it redacts sensitive values.
 - Use Local Explorer's `/cdn-cgi/explorer/api` OpenAPI surface for agent-driven local binding inspection.
