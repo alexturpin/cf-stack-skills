@@ -3,7 +3,8 @@
 ## Dependencies and versions
 
 - Resolve every named stack package from the current stable npm tag at scaffold time.
-- Keep the lockfile.
+- Use pnpm exclusively and commit `pnpm-lock.yaml`; do not retain npm, Yarn, or Bun lockfiles.
+- Set the `packageManager` field in `package.json` to the resolved pnpm version.
 - Use the latest active LTS Node.js release.
 - Use TypeScript 7 or newer, Mantine 9 or newer, and Wrangler with Local Explorer support.
 - Treat incompatibility as a failed scaffold with a package/version report.
@@ -60,7 +61,7 @@ Generate a short `AGENTS.md` that lists:
 - the stack identity;
 - the stable package scripts;
 - the installed `tanstack`, `wrangler`, `drizzle-kit`, `auth`, `oxlint`, `oxfmt`, `tsc`, and `vitest` CLIs;
-- the requirement to run `npm run validate` after changes;
+- the requirement to run `pnpm run validate` after changes;
 - the rule that production provisioning, secrets, remote migrations, and deploys need explicit authority.
 
 Do not copy framework documentation into `AGENTS.md`.

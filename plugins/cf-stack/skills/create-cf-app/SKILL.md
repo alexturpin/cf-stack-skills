@@ -19,21 +19,21 @@ Create a current application from maintained CLIs and small integration edits. D
 6. Resolve the absolute target as `<parent-directory>/<application-slug>` and show that exact path before mutation. Run the TanStack CLI from the parent directory with the slug as its target.
 7. Confirm the target is safe and either absent or empty. Never scaffold into an existing application repository or merge into a non-empty directory.
 8. Confirm Codex can write to the parent directory. If the active workspace is rooted elsewhere, request narrowly scoped permission or tell the user to start the task from the intended parent directory; do not create the app inside the current repository as a workaround.
-9. Ask only for choices that materially differ from the remaining defaults:
-   - npm package manager
+9. Use pnpm exclusively for scaffolding, dependency installation, package scripts, and one-off package CLIs. Do not offer npm, Yarn, or Bun as alternatives. Commit `pnpm-lock.yaml`, set the `packageManager` field in `package.json` to the resolved pnpm version, and do not create or retain another package manager's lockfile.
+10. Ask only for choices that materially differ from the remaining defaults:
    - Better Auth enabled
    - latest active LTS Node.js
    - no demo business feature
-10. Keep provisioning, remote migrations, secrets, and deployment out of scaffolding unless explicitly requested.
-11. When a stated requirement needs infrastructure beyond the default Workers and D1 stack, use `$choose-cf-infrastructure`. Do not present the full Cloudflare catalog during routine scaffolding.
+11. Keep provisioning, remote migrations, secrets, and deployment out of scaffolding unless explicitly requested.
+12. When a stated requirement needs infrastructure beyond the default Workers and D1 stack, use `$choose-cf-infrastructure`. Do not present the full Cloudflare catalog during routine scaffolding.
 
 ## Discover before scaffolding
 
 Run current CLIs instead of assuming their options:
 
 ```sh
-npx @tanstack/cli@latest create --list-add-ons --json
-npx @tanstack/cli@latest create --addon-details <candidate> --json
+pnpm dlx @tanstack/cli@latest create --list-add-ons --json
+pnpm dlx @tanstack/cli@latest create --addon-details <candidate> --json
 ```
 
 Prefer official add-ons for TanStack libraries and integrations when they provide the required current stack. Inspect generated files and dependencies before adding overlapping manual setup.
@@ -41,8 +41,8 @@ Prefer official add-ons for TanStack libraries and integrations when they provid
 Use TanStack CLI documentation search for API questions:
 
 ```sh
-npx @tanstack/cli@latest search-docs "<query>" --library <library> --json
-npx @tanstack/cli@latest doc <library> <path> --json
+pnpm dlx @tanstack/cli@latest search-docs "<query>" --library <library> --json
+pnpm dlx @tanstack/cli@latest doc <library> <path> --json
 ```
 
 Use the versioned indexes only when the CLI or installed package skills do not answer the question:
@@ -57,10 +57,10 @@ Use the versioned indexes only when the CLI or installed package skills do not a
 Use the current CLI from the selected parent directory and include Intent explicitly because blank projects omit it:
 
 ```sh
-npx @tanstack/cli@latest create <application-slug> --blank --deployment cloudflare --intent -y
+pnpm dlx @tanstack/cli@latest create <application-slug> --blank --deployment cloudflare --intent -y
 ```
 
-Run all subsequent commands inside the generated repository. Use locally installed CLIs through package scripts or `npm exec`.
+Run all subsequent commands inside the generated repository. Verify that the CLI selected pnpm before continuing. Use locally installed CLIs through package scripts or `pnpm exec`.
 
 ## Resolve the latest stack
 
@@ -85,10 +85,10 @@ Use latest stable releases together. If installation or validation reveals a pee
 
 1. Preserve the TanStack Intent setup produced by `--intent`.
 2. Inspect the installed Intent CLI before invoking its mapping/install command.
-3. From the generated repository, install all Cloudflare-maintained skills at project scope using Cloudflare's documented Skills CLI flow. Check `npx skills add --help`, then run:
+3. From the generated repository, install all Cloudflare-maintained skills at project scope using Cloudflare's documented Skills CLI flow. Check `pnpm dlx skills add --help`, then run:
 
    ```sh
-   npx skills add https://github.com/cloudflare/skills --all -y
+   pnpm dlx skills add https://github.com/cloudflare/skills --all -y
    ```
 
    Do not pass `-g` or `--global`. Verify that the installer created project-local agent skill directories inside the generated repository.
@@ -127,12 +127,12 @@ Generate the auth schema through the current Auth CLI, then generate a Drizzle m
 
 Run the repository's commands in this order:
 
-1. `npm run cf:typegen`
-2. `npm run format`
-3. `npm run db:generate`
-4. `npm run db:check`
-5. `npm run db:migrate:local`
-6. `npm run validate`
+1. `pnpm run cf:typegen`
+2. `pnpm run format`
+3. `pnpm run db:generate`
+4. `pnpm run db:check`
+5. `pnpm run db:migrate:local`
+6. `pnpm run validate`
 7. `node <skill-directory>/scripts/audit-cf-project.mjs [--auth|--no-auth] [--guided|--developer]`
 
 Start local development and verify:

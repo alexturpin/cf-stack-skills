@@ -15,6 +15,9 @@ const expectedAuth = hasAuth ? true : hasNoAuth ? false : undefined;
 const expectedCollaboration = hasGuided ? "guided" : hasDeveloper ? "developer" : undefined;
 
 const pkg = JSON.parse(await readFile(resolve(root, "package.json"), "utf8"));
+if (!/^pnpm@\d/.test(pkg.packageManager ?? "")) {
+  fail("package.json packageManager must pin pnpm");
+}
 const packages = { ...pkg.dependencies, ...pkg.devDependencies };
 const requiredPackages = [
   "@mantine/core",
@@ -53,9 +56,17 @@ if (!/oxfmt/.test(pkg.scripts?.["format:check"] ?? "")) fail("format:check must 
 if (!/oxlint/.test(pkg.scripts?.lint ?? "")) fail("lint must use oxlint");
 
 try {
-  await stat(resolve(root, "package-lock.json"));
+  await stat(resolve(root, "pnpm-lock.yaml"));
 } catch {
-  fail("npm project must commit package-lock.json");
+  fail("pnpm project must commit pnpm-lock.yaml");
+}
+for (const lockfile of ["package-lock.json", "npm-shrinkwrap.json", "yarn.lock", "bun.lock", "bun.lockb"]) {
+  try {
+    await stat(resolve(root, lockfile));
+    fail(`pnpm project must not retain ${lockfile}`);
+  } catch (error) {
+    if (error?.code !== "ENOENT") throw error;
+  }
 }
 
 const agentText = await readFile(resolve(root, "AGENTS.md"), "utf8").catch(() => "");
@@ -87,7 +98,7 @@ const files = [];
 async function walk(directory) {
   for (const entry of await readdir(directory, { withFileTypes: true })) {
     if (ignored.has(entry.name)) continue;
-    if (entry.name === "package-lock.json") continue;
+    if (entry.name === "pnpm-lock.yaml") continue;
     const path = resolve(directory, entry.name);
     if (entry.isDirectory()) await walk(path);
     else if ([...textExtensions].some((extension) => entry.name.endsWith(extension))) files.push(path);
