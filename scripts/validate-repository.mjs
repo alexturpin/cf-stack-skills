@@ -8,6 +8,7 @@ const expectedSkills = [
   "build-cf-forms",
   "build-cf-routes",
   "build-cf-ui",
+  "choose-cf-infrastructure",
   "create-cf-app",
   "deploy-cf-app",
   "integrate-cf-auth",

@@ -9,6 +9,14 @@
     ],
     "negative": ["Add a button to this existing page."]
   },
+  "choose-cf-infrastructure": {
+    "positive": [
+      "Which Cloudflare service should hold user-uploaded files for this Workers app?",
+      "Help me choose between Durable Objects, Queues, and Workflows for this realtime background process.",
+      "What Cloudflare infrastructure should we add for vector search and AI inference?"
+    ],
+    "negative": ["Add a column to our existing D1 table and run the local migration."]
+  },
   "maintain-cf-tooling": {
     "positive": [
       "Upgrade every CF dependency to the latest compatible stable version.",

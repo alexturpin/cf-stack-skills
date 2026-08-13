@@ -25,6 +25,7 @@ Create a current application from maintained CLIs and small integration edits. D
    - latest active LTS Node.js
    - no demo business feature
 10. Keep provisioning, remote migrations, secrets, and deployment out of scaffolding unless explicitly requested.
+11. When a stated requirement needs infrastructure beyond the default Workers and D1 stack, use `$choose-cf-infrastructure`. Do not present the full Cloudflare catalog during routine scaffolding.
 
 ## Discover before scaffolding
 

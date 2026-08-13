@@ -1,0 +1,4 @@
+interface:
+  display_name: "Choose CF Infrastructure"
+  short_description: "Choose the right Cloudflare services"
+  default_prompt: "Use $choose-cf-infrastructure to select Cloudflare services for this application."
