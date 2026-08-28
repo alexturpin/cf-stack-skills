@@ -13,7 +13,7 @@ Use TanStack Form for state and Mantine for presentation. Do not install or use 
 2. Use installed Intent knowledge or TanStack CLI docs before writing APIs:
 
 ```sh
-npm exec tanstack -- search-docs "<query>" --library form --framework react --json
+pnpm exec tanstack -- search-docs "<query>" --library form --framework react --json
 ```
 
 3. Fall back to https://tanstack.com/form/latest/llms.txt, https://mantine.dev/llms.txt, and https://zod.dev/llms.txt.
@@ -52,4 +52,4 @@ For dirty forms that can lose work, use TanStack Router `useBlocker` rather than
 - Test keyboard-only use, focus on errors, async pending state, and repeated submission.
 - When navigation blocking is present, test proceed, cancel, save, discard, reload, and tab-close behavior.
 - Confirm the server rejects invalid input independently of client validation.
-- Run `npm run typecheck`, relevant tests, and `npm run build`.
+- Run `pnpm run typecheck`, relevant tests, and `pnpm run build`.

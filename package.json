@@ -5,7 +5,7 @@
   "type": "module",
   "description": "Source marketplace for the CF Stack Codex plugin.",
   "scripts": {
-    "validate": "node scripts/validate-repository.mjs",
+    "validate": "node scripts/validate-repository.mjs && node scripts/test-project-audit.mjs",
     "validate:links": "node scripts/check-links.mjs",
     "validate:latest-stack": "node scripts/check-latest-stack.mjs"
   },

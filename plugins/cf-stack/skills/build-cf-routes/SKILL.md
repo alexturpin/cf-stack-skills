@@ -13,9 +13,9 @@ Follow the APIs of the installed TanStack versions. Keep this skill focused on C
 2. Inspect installed Intent skills and TanStack CLI documentation first:
 
 ```sh
-npm exec tanstack -- search-docs "<query>" --library start --json
-npm exec tanstack -- search-docs "<query>" --library router --framework react --json
-npm exec tanstack -- doc <library> <path> --json
+pnpm exec tanstack -- search-docs "<query>" --library start --json
+pnpm exec tanstack -- search-docs "<query>" --library router --framework react --json
+pnpm exec tanstack -- doc <library> <path> --json
 ```
 
 3. Fall back to https://tanstack.com/start/v1/llms.txt and https://tanstack.com/router/v1/llms.txt.
@@ -70,4 +70,4 @@ npm exec tanstack -- doc <library> <path> --json
 - Test direct SSR navigation, client navigation, loader invalidation, and error behavior.
 - Test blocked in-app navigation, proceed, cancel, successful-save reset, reload, and tab-close behavior when a blocker is used.
 - Test unauthenticated and authenticated navigation for guarded routes.
-- Run `npm run typecheck`, relevant tests, and `npm run build`.
+- Run `pnpm run typecheck`, relevant tests, and `pnpm run build`.

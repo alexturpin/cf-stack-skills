@@ -1,4 +1,5 @@
 const urls = [
+  "https://nodejs.org/dist/index.json",
   "https://tanstack.com/start/v1/llms.txt",
   "https://tanstack.com/router/v1/llms.txt",
   "https://tanstack.com/router/v1/docs/api/router/useBlockerHook",
@@ -6,10 +7,12 @@ const urls = [
   "https://tanstack.com/form/latest/llms.txt",
   "https://mantine.dev/llms.txt",
   "https://mantine.dev/x/notifications/",
+  "https://lingui.dev/llms.txt",
   "https://orm.drizzle.team/llms.txt",
   "https://better-auth.com/llms.txt",
   "https://zod.dev/llms.txt",
   "https://developers.cloudflare.com/workers/llms.txt",
+  "https://developers.cloudflare.com/workers/observability/",
   "https://developers.cloudflare.com/d1/llms.txt",
   "https://oxc.rs/docs/guide/usage/linter.md",
   "https://oxc.rs/docs/guide/usage/formatter.md",

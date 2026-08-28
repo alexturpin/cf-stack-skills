@@ -22,6 +22,7 @@ Use the installed Mantine major and current documentation. Do not carry Mantine 
 - Preserve the modal manager used by the application.
 - Keep theme tokens in the theme and component-specific layout in CSS Modules or component props.
 - Prefer Mantine responsive APIs and semantic components over ad-hoc div systems.
+- Prefer Mantine responsive props or component-scoped CSS Modules whose cascade order is understood. Verify computed visibility when Mantine display utilities and application CSS target the same element.
 - Use Tabler React icons consistently; provide accessible labels for icon-only controls.
 
 ## Integrate typed navigation
@@ -51,4 +52,7 @@ Use `$build-cf-forms` for validation and form state. Mantine supplies presentati
 
 - Check current Mantine API signatures rather than trusting copied examples.
 - Test narrow and wide layouts, keyboard navigation, active links, pending states, notification deduplication/update behavior, and modal focus.
-- Run `npm run format:check`, `npm run lint`, `npm run typecheck`, relevant tests, and `npm run build`.
+- When browser tooling is available and the product does not define its own viewport matrix, verify representative widths around 360, 768, and 1280 pixels. Check the actual breakpoint boundaries, not only the smallest and largest screenshots.
+- Assert that `document.documentElement.scrollWidth <= document.documentElement.clientWidth` unless horizontal scrolling is an intentional, contained interaction. Inspect computed display/visibility for responsive alternatives so hidden controls do not disagree with visible content.
+- Verify long translated or user-generated labels at the narrow viewport when that content is in scope.
+- Run `pnpm run format:check`, `pnpm run lint`, `pnpm run typecheck`, relevant tests, and `pnpm run build`.

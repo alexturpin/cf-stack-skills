@@ -1,0 +1,4 @@
+interface:
+  display_name: "Localize CF App"
+  short_description: "Add opt-in Lingui localization to CF apps"
+  default_prompt: "Use $localize-cf-app to add the requested locales with an SSR-safe Lingui catalog workflow."

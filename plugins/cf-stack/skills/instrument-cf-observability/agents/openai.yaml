@@ -1,0 +1,4 @@
+interface:
+  display_name: "Instrument CF Observability"
+  short_description: "Add safe structured Worker observability"
+  default_prompt: "Use $instrument-cf-observability to add structured, redacted Worker logs with request correlation."

@@ -39,9 +39,9 @@ Use Drizzle for typed schema/query construction and SQL generation. Use Wrangler
 Use this ownership split:
 
 ```sh
-npm run db:generate
-npm run db:check
-npm run db:migrate:local
+pnpm run db:generate
+pnpm run db:check
+pnpm run db:migrate:local
 ```
 
 - `db:generate` must run `drizzle-kit generate`.
@@ -68,6 +68,5 @@ Drizzle Studio's D1 HTTP driver targets deployed D1 credentials. Do not present 
 - Review generated SQL before applying it.
 - Apply to a clean local D1 database and an existing migrated local database.
 - Test constraints, defaults, relation queries, and rollback/error behavior where relevant.
-- Run `npm run cf:typegen`, `npm run db:check`, relevant tests, `npm run typecheck`, and `npm run build`.
+- Run `pnpm run cf:typegen`, `pnpm run db:check`, relevant tests, `pnpm run typecheck`, and `pnpm run build`.
 - Before a remote migration, list pending remote migrations, confirm the target account/database, and obtain explicit authorization.
-

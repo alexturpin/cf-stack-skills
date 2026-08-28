@@ -22,10 +22,10 @@ Create a current application from maintained CLIs and small integration edits. D
 9. Use pnpm exclusively for scaffolding, dependency installation, package scripts, and one-off package CLIs. Do not offer npm, Yarn, or Bun as alternatives. Commit `pnpm-lock.yaml`, set the `packageManager` field in `package.json` to the resolved pnpm version, and do not create or retain another package manager's lockfile.
 10. Ask only for choices that materially differ from the remaining defaults:
    - Better Auth enabled
-   - latest active LTS Node.js
    - no demo business feature
 11. Keep provisioning, remote migrations, secrets, and deployment out of scaffolding unless explicitly requested.
 12. When a stated requirement needs infrastructure beyond the default Workers and D1 stack, use `$choose-cf-infrastructure`. Do not present the full Cloudflare catalog during routine scaffolding.
+13. Do not ask about or add localization by default. When the user explicitly requests multiple languages, locale negotiation, or Lingui, use `$localize-cf-app` after the base scaffold is established.
 
 ## Discover before scaffolding
 
@@ -62,6 +62,18 @@ pnpm dlx @tanstack/cli@latest create <application-slug> --blank --deployment clo
 
 Run all subsequent commands inside the generated repository. Verify that the CLI selected pnpm before continuing. Use locally installed CLIs through package scripts or `pnpm exec`.
 
+## Select the Node.js runtime
+
+Resolve the latest active LTS Node.js release at scaffold time through an installed version manager or Node.js's official release index at https://nodejs.org/dist/index.json. Do not copy a version number from this skill or infer LTS status from the newest current release.
+
+1. Write the resolved full `major.minor.patch` version to `.node-version`.
+2. Set `package.json#engines.node` to `>=<resolved-version> <<next-major>`.
+3. Activate or install that version through the available version manager before installing dependencies.
+4. Verify `node --version` exactly matches `.node-version`; stop if the selected runtime cannot be activated.
+5. Configure CI to read `.node-version` rather than duplicating the version in a workflow.
+
+The generated-project audit must run under this selected runtime so a globally installed older Node.js cannot produce a misleading successful validation.
+
 ## Resolve the latest stack
 
 Inspect `package.json` and the lockfile before adding anything. Install missing packages at `@latest`; update existing stack packages to `@latest`; then commit the resolved lockfile. Do not silently retain an old major or downgrade a conflict.
@@ -85,15 +97,38 @@ Use latest stable releases together. If installation or validation reveals a pee
 
 1. Preserve the TanStack Intent setup produced by `--intent`.
 2. Inspect the installed Intent CLI before invoking its mapping/install command.
-3. From the generated repository, install all Cloudflare-maintained skills at project scope using Cloudflare's documented Skills CLI flow. Check `pnpm dlx skills add --help`, then run:
+3. From the generated repository, inspect the current Skills CLI and available Cloudflare skills:
 
    ```sh
-   pnpm dlx skills add https://github.com/cloudflare/skills --all -y
+   pnpm dlx skills add --help
+   pnpm dlx skills add https://github.com/cloudflare/skills --list
    ```
 
-   Do not pass `-g` or `--global`. Verify that the installer created project-local agent skill directories inside the generated repository.
-4. When auth is enabled, install Better Auth's maintained skills with its documented skills installer.
-5. Let documented installers manage repository-local agent directories; do not copy upstream skill contents into custom CF skill folders.
+4. Install the focused Workers baseline at project scope for every generated application:
+
+   ```sh
+   pnpm dlx skills add https://github.com/cloudflare/skills --skill workers-best-practices wrangler --agent '*' -y
+   ```
+
+5. Add only skills justified by requirements already in scope:
+   - `cloudflare-email-service` for sending or receiving email;
+   - `durable-objects` when Durable Objects were selected;
+   - `turnstile-spin` for requested bot protection;
+   - `agents-sdk` for an Agents SDK application;
+   - `web-perf` for requested performance auditing;
+   - the applicable `sandbox-*` skill for Cloudflare Sandbox work; and
+   - `cloudflare-one` or `cloudflare-one-migrations` for Cloudflare One work.
+
+   Append applicable names to the Cloudflare `--skill` list. Do not install the broad `cloudflare` umbrella by default; `$choose-cf-infrastructure` and the focused CF skills own service selection and retrieval.
+6. When auth is enabled, install Better Auth's security skill:
+
+   ```sh
+   pnpm dlx skills add https://github.com/better-auth/skills --skill better-auth-security-best-practices --agent '*' -y
+   ```
+
+   Add `email-and-password-best-practices`, `organization-best-practices`, or `two-factor-authentication-best-practices` only when the corresponding feature is already requested. Do not install generic `create-auth` or `better-auth-best-practices`; `$integrate-cf-auth` owns the CF/D1 integration and reads current Better Auth documentation directly.
+7. Do not pass `-g` or `--global`. Verify that the installer created project-local agent skill directories and that `skills-lock.json` records only the selected skills.
+8. Let the installer manage repository-local agent directories; do not copy upstream skill contents into custom CF skill folders.
 
 ## Apply the CF contract
 
@@ -110,6 +145,7 @@ Read [project-contract.md](references/project-contract.md) and implement every a
 - Configure Wrangler's `migrations_dir` and `migrations_pattern` to match generated Drizzle files.
 - Use Local Explorer or Wrangler commands for local D1 inspection.
 - Generate binding types after Wrangler configuration changes.
+- Enable Workers observability in Wrangler configuration. When auth or server-side writes exist, use `$instrument-cf-observability` to add structured outcome events, request correlation, and redaction without logging credentials, identity PII, or raw request data.
 - Keep `AGENTS.md` short and CLI-oriented.
 - Generate the collaboration section selected during setup: omit it entirely for Developer mode; append the exact Guided builder section from the project contract for Guided mode.
 - In Guided mode, include the one-message `ENGINE ROOM:` technical-response override exactly as defined in the project contract.
@@ -133,7 +169,7 @@ Run the repository's commands in this order:
 4. `pnpm run db:check`
 5. `pnpm run db:migrate:local`
 6. `pnpm run validate`
-7. `node <skill-directory>/scripts/audit-cf-project.mjs [--auth|--no-auth] [--guided|--developer]`
+7. Run `node <skill-directory>/scripts/audit-cf-project.mjs [--auth|--no-auth] [--guided|--developer]` under the Node.js version in `.node-version`.
 
 Start local development and verify:
 

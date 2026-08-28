@@ -18,6 +18,24 @@ const pkg = JSON.parse(await readFile(resolve(root, "package.json"), "utf8"));
 if (!/^pnpm@\d/.test(pkg.packageManager ?? "")) {
   fail("package.json packageManager must pin pnpm");
 }
+const selectedNodeVersion = await readFile(resolve(root, ".node-version"), "utf8")
+  .then((value) => value.trim().replace(/^v/, ""))
+  .catch(() => "");
+if (!/^\d+\.\d+\.\d+$/.test(selectedNodeVersion)) {
+  fail(".node-version must contain the resolved active-LTS Node.js version");
+} else {
+  const selectedNodeMajor = Number(selectedNodeVersion.split(".")[0]);
+  if (process.versions.node !== selectedNodeVersion) {
+    fail(
+      `audit must run with Node.js ${selectedNodeVersion} from .node-version; found ${process.versions.node}`,
+    );
+  }
+  const engineRange = pkg.engines?.node ?? "";
+  const expectedEngineRange = `>=${selectedNodeVersion} <${selectedNodeMajor + 1}`;
+  if (engineRange !== expectedEngineRange) {
+    fail(`package.json engines.node must be ${expectedEngineRange}`);
+  }
+}
 const packages = { ...pkg.dependencies, ...pkg.devDependencies };
 const requiredPackages = [
   "@mantine/core",
@@ -92,12 +110,14 @@ if (expectedCollaboration === "developer" && agentText.includes(collaborationHea
   fail("developer AGENTS.md must omit the collaboration-style section");
 }
 
-const ignored = new Set([".git", ".wrangler", "dist", "node_modules", ".output", "coverage"]);
+const ignored = new Set([".git", ".wrangler", "coverage", "dist", "node_modules", ".output"]);
+const ignoredProjectSkillRoots = new Set([".agents", ".claude", ".codex", "agent"]);
 const textExtensions = new Set([".js", ".json", ".jsonc", ".md", ".mjs", ".mts", ".ts", ".tsx", ".toml", ".yaml", ".yml"]);
 const files = [];
 async function walk(directory) {
   for (const entry of await readdir(directory, { withFileTypes: true })) {
     if (ignored.has(entry.name)) continue;
+    if (directory === root && ignoredProjectSkillRoots.has(entry.name)) continue;
     if (entry.name === "pnpm-lock.yaml") continue;
     const path = resolve(directory, entry.name);
     if (entry.isDirectory()) await walk(path);
@@ -134,7 +154,35 @@ if (!wranglerConfig) fail("missing Wrangler configuration");
 else {
   const text = await readFile(wranglerConfig, "utf8");
   if (!text.includes("migrations_dir")) fail("Wrangler D1 binding is missing migrations_dir");
-  if (!text.includes("migrations_pattern")) warnings.push("Wrangler config has no migrations_pattern; confirm migrations are top-level SQL files");
+  const observabilityEnabled =
+    /["']?observability["']?\s*:\s*\{[^}]*["']?enabled["']?\s*:\s*true/.test(text) ||
+    /^\[observability\][\s\S]*?^enabled\s*=\s*true/m.test(text);
+  if (!observabilityEnabled) {
+    fail("Wrangler configuration must enable Workers observability");
+  }
+  const migrationsDirectory = text.match(
+    /["']?migrations_dir["']?\s*[:=]\s*["']([^"']+)["']/,
+  )?.[1];
+  if (migrationsDirectory && !text.includes("migrations_pattern")) {
+    const migrationRoot = resolve(root, migrationsDirectory);
+    const sqlFiles = [];
+    async function collectSql(directory) {
+      for (const entry of await readdir(directory, { withFileTypes: true })) {
+        const path = resolve(directory, entry.name);
+        if (entry.isDirectory()) await collectSql(path);
+        else if (entry.name.endsWith(".sql")) sqlFiles.push(path);
+      }
+    }
+    try {
+      await collectSql(migrationRoot);
+      if (sqlFiles.some((file) => /[\\/]/.test(relative(migrationRoot, file)))) {
+        warnings.push("Wrangler config needs migrations_pattern for nested migration SQL");
+      }
+    } catch (error) {
+      if (error?.code !== "ENOENT") throw error;
+      warnings.push(`migration directory does not exist: ${migrationsDirectory}`);
+    }
+  }
 }
 
 if (warnings.length) console.warn(warnings.map((message) => `warning: ${message}`).join("\n"));

@@ -61,6 +61,20 @@
     ],
     "negative": ["Add a domain permission check to an app without Better Auth."]
   },
+  "instrument-cf-observability": {
+    "positive": [
+      "Add structured Worker logs with request correlation and safe redaction.",
+      "Configure Cloudflare observability and instrument our server mutations."
+    ],
+    "negative": ["Add a client-only debug statement to this React component."]
+  },
+  "localize-cf-app": {
+    "positive": [
+      "Add French and English localization to this CF app with Lingui.",
+      "Fix our SSR locale negotiation and Lingui catalog workflow."
+    ],
+    "negative": ["Create a new CF app; it does not need localization."]
+  },
   "deploy-cf-app": {
     "positive": [
       "Prepare this CF app for a production Cloudflare deployment.",

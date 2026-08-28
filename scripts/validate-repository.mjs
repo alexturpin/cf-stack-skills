@@ -11,7 +11,9 @@ const expectedSkills = [
   "choose-cf-infrastructure",
   "create-cf-app",
   "deploy-cf-app",
+  "instrument-cf-observability",
   "integrate-cf-auth",
+  "localize-cf-app",
   "maintain-cf-tooling",
   "manage-cf-data",
 ];
@@ -50,6 +52,14 @@ const projectAudit = await readFile(new URL("create-cf-app/scripts/audit-cf-proj
 for (const phrase of ["Developer", "Guided builder", "Never infer technical ability"]) {
   if (!createSkill.includes(phrase)) fail(`create-cf-app must define collaboration choice: ${phrase}`);
 }
+for (const phrase of [
+  "--skill workers-best-practices wrangler",
+  "--skill better-auth-security-best-practices",
+  "skills-lock.json",
+]) {
+  if (!createSkill.includes(phrase)) fail(`create-cf-app is missing curated skill policy: ${phrase}`);
+}
+if (createSkill.includes("--all")) fail("create-cf-app must not install every upstream skill");
 for (const phrase of [
   "## Collaboration style",
   "The primary user prefers guided product development.",

@@ -5,7 +5,8 @@
 - Resolve every named stack package from the current stable npm tag at scaffold time.
 - Use pnpm exclusively and commit `pnpm-lock.yaml`; do not retain npm, Yarn, or Bun lockfiles.
 - Set the `packageManager` field in `package.json` to the resolved pnpm version.
-- Use the latest active LTS Node.js release.
+- Resolve the latest active LTS Node.js release at scaffold time from an installed version manager or Node.js's official release index; do not bake a version into the skill.
+- Write the resolved full version to `.node-version`, set `engines.node` to `>=<resolved-version> <<next-major>`, activate it before dependency installation, and configure CI to read the same file.
 - Use TypeScript 7 or newer, Mantine 9 or newer, and Wrangler with Local Explorer support.
 - Treat incompatibility as a failed scaffold with a package/version report.
 
@@ -53,6 +54,15 @@ Add `auth:generate` and `auth:info` only when Better Auth is enabled.
 - Use explicit `--local` and `--remote` flags.
 - Use Wrangler Local Explorer for local browsing and ad-hoc SQL.
 - Never scan `.wrangler/state`, use `better-sqlite3`, or make `db:push` the default.
+
+## Workers observability
+
+- Enable Workers observability in Wrangler configuration.
+- Instrument authentication and authorization outcomes, privileged changes, server-side writes, external handoffs, and unexpected boundary failures when those operations exist.
+- Emit structured `console.*` events with stable names, outcomes, and bounded request correlation metadata.
+- Do not log raw request or response bodies, query strings, cookies, authorization headers, OTPs, tokens, passwords, secrets, email addresses, or email bodies.
+- Keep redaction and safe error serialization in a server-only helper and cover them with focused tests.
+- Make production sampling an explicit operational choice; do not provision another logging product by default.
 
 ## Agent guidance
 

@@ -10,7 +10,7 @@ Use the locally installed Wrangler CLI and maintained Cloudflare skills. Separat
 ## Ground the release
 
 1. Read `package.json`, the lockfile, Wrangler config, generated binding types, deployment adapter, environment files, migrations, CI, and recent deployment conventions.
-2. Check `npm exec wrangler -- --version` and relevant help output.
+2. Check `pnpm exec wrangler --version` and relevant help output.
 3. Use installed Cloudflare skills and current documentation:
    - https://developers.cloudflare.com/workers/llms.txt
    - https://developers.cloudflare.com/d1/llms.txt
@@ -19,9 +19,9 @@ Use the locally installed Wrangler CLI and maintained Cloudflare skills. Separat
 ## Prepare without mutation
 
 - Install/update Wrangler locally, not globally.
-- Run `npm run cf:typegen` after binding or compatibility changes.
-- Run `npm run validate` from a clean dependency installation.
-- Run `npm run db:check` and list local and remote migration status.
+- Run `pnpm run cf:typegen` after binding or compatibility changes.
+- Run `pnpm run validate` from a clean dependency installation.
+- Run `pnpm run db:check` and list local and remote migration status.
 - Inspect required variables and secret names without printing secret values.
 - Use a preview or temporary deployment only when the user authorizes the external deployment action.
 - Prefer Wrangler configuration as the source of truth over dashboard-only edits.
@@ -52,6 +52,7 @@ Do not run remote migrations concurrently with another release. Do not treat Wor
 
 - Use Wrangler deployment/version/status commands with JSON output where available.
 - Use `wrangler tail` for request and exception logs.
+- Check structured event shape, correlation metadata, redaction, and observability sampling before adding a separate logging service; use `$instrument-cf-observability` when application instrumentation needs work.
 - Check binding type drift, compatibility dates, missing secrets, pending migrations, and environment selection before changing code.
 - Report the failing layer and evidence before attempting a mutation.
 

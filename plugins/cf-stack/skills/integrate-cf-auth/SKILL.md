@@ -33,11 +33,11 @@ Confirm exact imports from installed packages. Prefer the current minimal Drizzl
 Use the current Auth CLI instead of hand-writing Better Auth tables:
 
 ```sh
-npx auth@latest info --json
-npx auth@latest generate --config <auth-config> --output <schema-output> --yes
-npm run db:generate
-npm run db:check
-npm run db:migrate:local
+pnpm dlx auth@latest info --json
+pnpm dlx auth@latest generate --config <auth-config> --output <schema-output> --yes
+pnpm run db:generate
+pnpm run db:check
+pnpm run db:migrate:local
 ```
 
 The Auth CLI supports TypeScript path aliases and stubs `cloudflare:workers`; do not add `better-sqlite3` or a private Wrangler SQLite path just to load the configuration.
@@ -59,6 +59,5 @@ Never use the Auth CLI's direct migrate command for the Drizzle adapter. Drizzle
 - Apply auth migrations to local D1 with Wrangler.
 - Test signup, login, logout, session refresh, invalid credentials, expired sessions, and protected direct navigation.
 - Test cookie behavior in local development and the deployed HTTPS environment configuration.
-- Run `npm run typecheck`, relevant tests, and `npm run build`.
+- Run `pnpm run typecheck`, relevant tests, and `pnpm run build`.
 - Do not provision providers, write remote secrets, apply remote migrations, or deploy without explicit authority.
-

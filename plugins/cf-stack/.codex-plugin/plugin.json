@@ -1,7 +1,7 @@
 {
   "name": "cf-stack",
-  "version": "0.1.0+codex.20260813232905",
-  "description": "CLI-first skills for TanStack Start applications on Cloudflare Workers with Mantine, Drizzle D1, and Better Auth.",
+  "version": "0.1.0+codex.20260828195357",
+  "description": "CLI-first skills for TanStack Start applications on Cloudflare Workers with Mantine, Drizzle D1, Better Auth, Lingui, and structured observability.",
   "author": {
     "name": "Alex Turpin",
     "url": "https://github.com/alexturpin"
@@ -15,13 +15,15 @@
     "mantine",
     "drizzle",
     "d1",
-    "better-auth"
+    "better-auth",
+    "lingui",
+    "observability"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "CF Stack",
     "shortDescription": "Build current TanStack Start apps on Cloudflare.",
-    "longDescription": "Scaffold, build, migrate, authenticate, validate, and deploy TanStack Start applications on Cloudflare Workers with Mantine and Drizzle D1.",
+    "longDescription": "Scaffold, build, migrate, authenticate, localize, instrument, validate, and deploy TanStack Start applications on Cloudflare Workers with Mantine and Drizzle D1.",
     "developerName": "Alex Turpin",
     "category": "Developer Tools",
     "capabilities": [

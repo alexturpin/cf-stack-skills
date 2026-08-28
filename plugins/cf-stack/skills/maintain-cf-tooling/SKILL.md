@@ -12,18 +12,18 @@ Use locally installed CLIs, machine-readable output, and reproducible lockfiles.
 Read:
 
 - `package.json` and the lockfile;
-- Node and npm versions;
+- Node and pnpm versions, `.node-version`, `engines.node`, and `packageManager`;
 - `tsconfig` files;
 - Oxfmt and Oxlint configuration;
 - Vite, Vitest, Drizzle, and Wrangler configuration;
 - current `AGENTS.md` commands;
 - CI workflows.
 
-Run local version and help commands before changing options. Prefer `npm exec <cli> -- --help` and JSON output where supported. Read [cli-catalog.md](references/cli-catalog.md) for the intended ownership boundaries.
+Run local version and help commands before changing options. Prefer `pnpm exec <cli> --help` and JSON output where supported. Read [cli-catalog.md](references/cli-catalog.md) for the intended ownership boundaries.
 
 ## Upgrade current stable packages
 
-1. Query current stable versions from the npm registry or `npm outdated`.
+1. Query current stable versions from the npm registry or `pnpm outdated`.
 2. Group upgrades by compatibility surface:
    - TanStack Start, Router, Query, Form, and CLI;
    - React and Vite;
@@ -37,7 +37,7 @@ Run local version and help commands before changing options. Prefer `npm exec <c
 4. Do not silently downgrade any package to clear a peer error.
 5. If latest stable packages conflict, report the exact ranges, affected command, and smallest upstream-owned resolution. Leave the repository on a working state only when the user authorizes a temporary pin.
 
-Use the latest active LTS Node.js. Keep Wrangler locally installed so every developer and agent runs the locked version.
+Resolve the latest active LTS Node.js at change time through an installed version manager or Node.js's official release index at https://nodejs.org/dist/index.json. Write the full version to `.node-version`, set `engines.node` to `>=<resolved-version> <<next-major>`, activate it before installation and validation, and make CI read the same file. Do not preserve a stale version merely because it was previously pinned. Keep Wrangler locally installed so every developer and agent runs the locked version.
 
 ## Keep the fast TypeScript toolchain
 
@@ -79,13 +79,13 @@ Use package scripts for stable workflows and direct CLI commands for discovery o
 Run:
 
 1. CLI version checks.
-2. `npm run format:check`.
-3. `npm run lint`.
-4. `npm run typecheck`.
-5. `npm test`.
-6. `npm run build`.
-7. `npm run cf:typegen` after Wrangler changes.
-8. `npm run db:check` after Drizzle upgrades.
+2. Confirm `node --version` exactly matches `.node-version` and `pnpm --version` matches `packageManager`.
+3. `pnpm run format:check`.
+4. `pnpm run lint`.
+5. `pnpm run typecheck`.
+6. `pnpm run test`.
+7. `pnpm run build`.
+8. `pnpm run cf:typegen` after Wrangler changes.
+9. `pnpm run db:check` after Drizzle upgrades.
 
 For a latest-version upgrade, include a before/after version table and call out experimental, preview, or deprecated surfaces. Do not install the preview `cf` CLI as a production dependency until Cloudflare marks the required operations stable.
-

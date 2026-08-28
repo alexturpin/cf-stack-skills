@@ -1,6 +1,6 @@
 # CF Stack Skills
 
-An installable Codex skill suite for building opinionated applications using TanStack Start on Cloudflare Workers with Mantine, TanStack Query and Form, Zod, Drizzle D1, and optional Better Auth.
+An installable Codex skill suite for building opinionated applications using TanStack Start on Cloudflare Workers with Mantine, TanStack Query and Form, Zod, Drizzle D1, optional Better Auth and Lingui localization, and structured Workers observability.
 
 The plugin contains integration policy and repeatable workflows. It deliberately delegates framework API reference material to maintained package skills, CLIs, and upstream `llms.txt` indexes.
 
