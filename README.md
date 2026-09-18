@@ -29,6 +29,10 @@ Guided projects also recognize `ENGINE ROOM:` at the start of a message as a one
 
 For example, `Rental Concierge` under `/Users/alex/src` becomes `/Users/alex/src/rental-concierge`. The skill finishes by reporting the selected collaboration style, created path, resolved package versions, validation results, and development command.
 
+## Improve skills after implementation
+
+Use `$improve-cf-skills` to review a recent feature or fix for reusable improvements to CF Stack guidance. It presents evidence and concrete proposed edits, waits for your approval, then applies the selected changes and follows the repository's validation and reinstall rules.
+
 ## Develop
 
 ```sh

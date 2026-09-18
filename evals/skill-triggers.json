@@ -1,4 +1,14 @@
 {
+  "improve-cf-skills": {
+    "positive": [
+      "Review the feature we just implemented and suggest improvements to the CF Stack skills before changing them.",
+      "What reusable lessons from this auth fix should we add to our CF skills? Show me proposed edits first."
+    ],
+    "negative": [
+      "Review this pull request for application bugs.",
+      "Implement a new signup form using the existing CF skills."
+    ]
+  },
   "create-cf-app": {
     "positive": [
       "Create a new TanStack Start app on Cloudflare with Mantine and D1.",

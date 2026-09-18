@@ -11,6 +11,7 @@ const expectedSkills = [
   "choose-cf-infrastructure",
   "create-cf-app",
   "deploy-cf-app",
+  "improve-cf-skills",
   "instrument-cf-observability",
   "integrate-cf-auth",
   "localize-cf-app",

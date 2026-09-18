@@ -1,6 +1,6 @@
 {
   "name": "cf-stack",
-  "version": "0.1.0+codex.20260828195357",
+  "version": "0.1.0+codex.20260918234153",
   "description": "CLI-first skills for TanStack Start applications on Cloudflare Workers with Mantine, Drizzle D1, Better Auth, Lingui, and structured observability.",
   "author": {
     "name": "Alex Turpin",
