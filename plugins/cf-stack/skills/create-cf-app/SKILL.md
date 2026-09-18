@@ -130,6 +130,16 @@ Use latest stable releases together. If installation or validation reveals a pee
 7. Do not pass `-g` or `--global`. Verify that the installer created project-local agent skill directories and that `skills-lock.json` records only the selected skills.
 8. Let the installer manage repository-local agent directories; do not copy upstream skill contents into custom CF skill folders.
 
+### Help users view local test emails
+
+When email is in scope, use the installed `cloudflare-email-service` skill and [Cloudflare's local sending guide](https://developers.cloudflare.com/email-service/local-development/sending/) for current setup details. Carry this local preview workflow into the generated project's `AGENTS.md` so it remains discoverable during later email or auth work:
+
+- The local Workers runtime simulates `send_email` by default when the binding has no `remote: true`; messages are not delivered to an inbox.
+- Trigger the application's email flow, read the development server output, and find the generated text/HTML file paths. Use the paths actually reported for that message; temporary directories and filenames vary.
+- Inspect the generated files and open the HTML in an available local browser or file preview when the user wants to view the email. Provide a clickable absolute file link as well; if only text is available, open that file. For verification or password-reset flows, help the user locate the generated action link.
+- Keep previewing local. Enabling `remote: true` sends real email and is a separate delivery test requiring the user's authorization and an onboarded sending domain.
+- Simulator output is for local inspection; do not add application logging of email bodies, addresses, or auth tokens to expose previews.
+
 ## Apply the CF contract
 
 Read [project-contract.md](references/project-contract.md) and implement every applicable item. In particular:
