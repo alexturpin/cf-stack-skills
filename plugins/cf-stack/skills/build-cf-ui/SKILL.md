@@ -23,7 +23,11 @@ Use the installed Mantine major and current documentation. Do not carry Mantine 
 - Keep theme tokens in the theme and component-specific layout in CSS Modules or component props.
 - Prefer Mantine responsive APIs and semantic components over ad-hoc div systems.
 - Prefer Mantine responsive props or component-scoped CSS Modules whose cascade order is understood. Verify computed visibility when Mantine display utilities and application CSS target the same element.
-- Use Tabler React icons consistently; provide accessible labels for icon-only controls.
+- Use `@tabler/icons-react` consistently, with static named imports at the point of use, such as `import { IconSearch } from '@tabler/icons-react'`, so production bundlers can tree-shake unused icons.
+- For data-driven icon choices, use an explicit map of named imports containing only the supported icons. Avoid whole-library namespace imports and dynamic lookups such as `Icons[name]`, which can retain the entire icon set.
+- Provide accessible labels for icon-only controls and hide decorative icons from assistive technology.
+
+Consult the official [Tabler React icon guide](https://tabler.io/guides/how-to-use-svg-icons-in-react) for import and bundle-size guidance.
 
 ## Integrate typed navigation
 

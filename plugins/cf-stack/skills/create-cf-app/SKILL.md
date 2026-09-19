@@ -91,7 +91,7 @@ Require these capabilities, allowing official add-ons to choose exact package sp
 - TanStack Start, Router, Query, and Form
 - React and Vite
 - Mantine core, hooks, notifications, and modals
-- Tabler React icons
+- `@tabler/icons-react` (follow `$build-cf-ui` for tree-shakeable imports)
 - Zod
 - Drizzle ORM and Drizzle Kit
 - Cloudflare Wrangler
