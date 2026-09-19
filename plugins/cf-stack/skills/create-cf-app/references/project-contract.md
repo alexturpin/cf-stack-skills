@@ -72,6 +72,7 @@ Generate a short `AGENTS.md` that lists:
 - the stable package scripts;
 - the installed `tanstack`, `wrangler`, `drizzle-kit`, `auth`, `oxlint`, `oxfmt`, `tsc`, and `vitest` CLIs;
 - the requirement to run `pnpm run validate` after changes;
+- the local environment convention: use gitignored `.env`, keep `.env.example` updated with safe placeholders, and preserve this choice during later integrations instead of introducing source `.dev.vars` files;
 - the rule that production provisioning, secrets, remote migrations, and deploys need explicit authority.
 
 Do not copy framework documentation into `AGENTS.md`.

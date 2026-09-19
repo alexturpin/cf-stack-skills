@@ -62,6 +62,14 @@ pnpm dlx @tanstack/cli@latest create <application-slug> --blank --deployment clo
 
 Run all subsequent commands inside the generated repository. Verify that the CLI selected pnpm before continuing. Use locally installed CLIs through package scripts or `pnpm exec`.
 
+## Configure local environment files
+
+- Use `.env` beside the Wrangler configuration for local variables and secrets. Create a committed `.env.example` with variable names and safe placeholders, keeping it aligned with the application's requirements.
+- Ignore `.env` and `.env.*` in Git, with an explicit exception for `.env.example`. Verify the local file is ignored and the example is trackable.
+- Normalize any local environment files produced by the scaffold to `.env`, preserving their values without printing secrets. Do not create source `.dev.vars` files: their presence suppresses Cloudflare's `.env` loading. Cloudflare-generated build output may still contain `.dev.vars`; leave those generated artifacts to the tooling.
+- Use Cloudflare's native loading; do not add a custom dotenv loader for the Worker. Keep server secrets out of `VITE_*` variables, which are exposed to client code. Consult [Cloudflare's environment-file rules](https://developers.cloudflare.com/workers/vite-plugin/reference/cloudflare-environments/) when environment-specific files are needed.
+- Verify local development can read the required variables through Worker bindings without logging their values.
+
 ## Select the Node.js runtime
 
 Resolve the latest active LTS Node.js release at scaffold time through an installed version manager or Node.js's official release index at https://nodejs.org/dist/index.json. Do not copy a version number from this skill or infer LTS status from the newest current release.

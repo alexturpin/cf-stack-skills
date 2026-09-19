@@ -12,6 +12,7 @@ const urls = [
   "https://better-auth.com/llms.txt",
   "https://zod.dev/llms.txt",
   "https://developers.cloudflare.com/workers/llms.txt",
+  "https://developers.cloudflare.com/workers/vite-plugin/reference/cloudflare-environments/",
   "https://developers.cloudflare.com/workers/observability/",
   "https://developers.cloudflare.com/d1/llms.txt",
   "https://oxc.rs/docs/guide/usage/linter.md",
