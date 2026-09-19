@@ -34,8 +34,7 @@ Run local version and help commands before changing options. Prefer `pnpm exec <
    - TypeScript, Oxfmt, Oxlint, and `oxlint-tsgolint`;
    - Vitest and Worker test integration.
 3. Install stable tags explicitly and update the lockfile.
-4. Do not silently downgrade any package to clear a peer error.
-5. If latest stable packages conflict, report the exact ranges, affected command, and smallest upstream-owned resolution. Leave the repository on a working state only when the user authorizes a temporary pin.
+4. Start with latest stable releases. When a verified incompatibility blocks a required integration, use the smallest supported compatibility adjustment within the user’s authorized scope. Document the conflicting versions, evidence, selected pin, and condition for removing it. Validate the resulting combination. Ask only when resolution would change requirements or violate an explicit version constraint. Never silently downgrade or bypass peer checks.
 
 Resolve the latest active LTS Node.js at change time through an installed version manager or Node.js's official release index at https://nodejs.org/dist/index.json. Write the full version to `.node-version`, set `engines.node` to `>=<resolved-version> <<next-major>`, activate it before installation and validation, and make CI read the same file. Do not preserve a stale version merely because it was previously pinned. Keep Wrangler locally installed so every developer and agent runs the locked version.
 

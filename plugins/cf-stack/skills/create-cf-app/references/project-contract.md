@@ -8,7 +8,7 @@
 - Resolve the latest active LTS Node.js release at scaffold time from an installed version manager or Node.js's official release index; do not bake a version into the skill.
 - Write the resolved full version to `.node-version`, set `engines.node` to `>=<resolved-version> <<next-major>`, activate it before dependency installation, and configure CI to read the same file.
 - Use TypeScript 7 or newer, Mantine 9 or newer, and Wrangler with Local Explorer support.
-- Treat incompatibility as a failed scaffold with a package/version report.
+- Start with latest stable releases. When a verified incompatibility blocks a required integration, use the smallest supported compatibility adjustment within the user’s authorized scope. Document the conflicting versions, evidence, selected pin, and condition for removing it. Validate the resulting combination. Ask only when resolution would change requirements or violate an explicit version constraint. Never silently downgrade or bypass peer checks.
 
 ## Required scripts
 

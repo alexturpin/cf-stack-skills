@@ -91,7 +91,7 @@ Require these capabilities, allowing official add-ons to choose exact package sp
 - Vitest and the current Cloudflare Worker test integration when Worker bindings are tested
 - Better Auth and its current Drizzle adapter when auth is enabled
 
-Use latest stable releases together. If installation or validation reveals a peer conflict, stop with the exact packages and ranges. Do not solve it by silently pinning an older release.
+Start with latest stable releases. When a verified incompatibility blocks a required integration, use the smallest supported compatibility adjustment within the user’s authorized scope. Document the conflicting versions, evidence, selected pin, and condition for removing it. Validate the resulting combination. Ask only when resolution would change requirements or violate an explicit version constraint. Never silently downgrade or bypass peer checks.
 
 ## Install maintained agent knowledge
 
