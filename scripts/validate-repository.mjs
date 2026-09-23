@@ -17,6 +17,7 @@ const expectedSkills = [
   "localize-cf-app",
   "maintain-cf-tooling",
   "manage-cf-data",
+  "update-cf-skills",
 ];
 
 const failures = [];

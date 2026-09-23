@@ -1,0 +1,4 @@
+interface:
+  display_name: "CF Stack: Update Skills"
+  short_description: "Refresh and verify the installed CF Stack plugin"
+  default_prompt: "Use $update-cf-skills to update my CF Stack plugin and verify the installed version."

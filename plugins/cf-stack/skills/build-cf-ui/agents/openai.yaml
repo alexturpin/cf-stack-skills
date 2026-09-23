@@ -1,4 +1,4 @@
 interface:
-  display_name: "Build CF UI"
+  display_name: "CF Stack: Build CF UI"
   short_description: "Build Mantine UI with typed routing"
   default_prompt: "Use $build-cf-ui to build this interface with Mantine and typed TanStack navigation."

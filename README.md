@@ -13,6 +13,27 @@ codex plugin add cf-stack@cf-stack-skills
 
 Start a new task after installation so Codex receives the bundled skill catalog.
 
+## Update
+
+For installations from GitHub, refresh the marketplace and reinstall the plugin:
+
+```sh
+codex plugin marketplace upgrade cf-stack-skills
+codex plugin add cf-stack@cf-stack-skills
+```
+
+Start a new Codex task to load the updated skills. Updates follow the marketplace's configured Git reference; a pinned tag or commit stays pinned.
+
+You can also ask Codex: **“Use $update-cf-skills to update my CF Stack plugin.”** This skill is available after installing a version that includes it; older installations need the commands above first.
+
+If your marketplace points at a local checkout, reinstalling uses that checkout's current files. Update the checkout separately when you want newer remote changes, then run `codex plugin add cf-stack@cf-stack-skills` and start a new task.
+
+## Identify skill sources
+
+CF Stack is an independent integration plugin, not an official Cloudflare skill collection. Its skills use **CF Stack:** display names. Codex also namespaces bundled skills under the plugin name, for example `cf-stack:build-cf-ui`; existing short skill IDs such as `$build-cf-ui` remain unchanged.
+
+The application-creation workflow separately installs selected upstream Cloudflare skills, such as `workers-best-practices` and `wrangler`, into the project. Those retain their upstream names. Check the project's `skills-lock.json` for their source; updating CF Stack does not update these separately installed skills.
+
 ## Create a new application
 
 Start the Codex task from the parent directory where new applications should live, or ensure Codex can write there. Invoke the skill explicitly or ask naturally:

@@ -1,4 +1,15 @@
 {
+  "update-cf-skills": {
+    "positive": [
+      "Update my installed CF Stack plugin to the latest version from its marketplace.",
+      "Which version of CF Stack skills do I have installed?"
+    ],
+    "negative": [
+      "Upgrade Wrangler and TanStack Start in my application.",
+      "Update the official Cloudflare skills installed in this project.",
+      "Check for a Codex app update."
+    ]
+  },
   "improve-cf-skills": {
     "positive": [
       "Review the feature we just implemented and suggest improvements to the CF Stack skills before changing them.",

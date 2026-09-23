@@ -1,4 +1,4 @@
 interface:
-  display_name: "Deploy CF App"
+  display_name: "CF Stack: Deploy CF App"
   short_description: "Validate and deploy a CF application"
   default_prompt: "Use $deploy-cf-app to prepare and safely deploy this application to Cloudflare."

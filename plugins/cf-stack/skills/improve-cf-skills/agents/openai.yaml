@@ -1,4 +1,4 @@
 interface:
-  display_name: "Improve CF Skills"
+  display_name: "CF Stack: Improve CF Skills"
   short_description: "Propose skill improvements from recent CF work"
   default_prompt: "Use $improve-cf-skills to review what we just implemented and propose CF Stack skill improvements for my approval."
