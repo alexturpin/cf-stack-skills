@@ -31,7 +31,7 @@ pnpm exec tanstack -- search-docs "<query>" --library form --framework react --j
 - Build small adapters that translate TanStack field state into current Mantine input props.
 - Set accessible labels, descriptions, required state, and error messages.
 - Mark touched/dirty state according to the installed TanStack Form API.
-- Keep value conversion explicit for dates, numbers, booleans, and nullable values.
+- Keep value conversion explicit for dates, numbers, booleans, and nullable values. For user-selected dates and times, consider the installed Mantine dates component and convert local picker values explicitly before sending UTC timestamps. Populate local date-time controls from local date and time parts, never by slicing `toISOString()`.
 - Use stable field names aligned with the submitted schema.
 - Avoid a universal field abstraction that hides materially different widgets.
 

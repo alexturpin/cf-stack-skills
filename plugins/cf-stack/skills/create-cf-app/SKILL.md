@@ -191,6 +191,7 @@ Run the repository's commands in this order:
 
 Start local development and verify:
 
+- scaffolded TanStack Forms show inline Zod errors for empty and invalid submissions, including required and email fields; set `noValidate` on the form so browser validation does not intercept submission;
 - an application request can use the local D1 binding;
 - `/cdn-cgi/explorer` can inspect the same D1 database;
 - the Explorer API is available at `/cdn-cgi/explorer/api`;
