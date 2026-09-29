@@ -6,6 +6,7 @@ const urls = [
   "https://tanstack.com/query/latest/llms.txt",
   "https://tanstack.com/form/latest/llms.txt",
   "https://mantine.dev/llms.txt",
+  "https://mantine.dev/dates/getting-started/",
   "https://mantine.dev/x/notifications/",
   "https://lingui.dev/llms.txt",
   "https://orm.drizzle.team/llms.txt",

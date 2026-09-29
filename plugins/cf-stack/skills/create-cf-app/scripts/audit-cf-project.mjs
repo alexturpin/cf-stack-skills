@@ -39,11 +39,13 @@ if (!/^\d+\.\d+\.\d+$/.test(selectedNodeVersion)) {
 const packages = { ...pkg.dependencies, ...pkg.devDependencies };
 const requiredPackages = [
   "@mantine/core",
+  "@mantine/dates",
   "@mantine/notifications",
   "@tanstack/react-form",
   "@tanstack/react-query",
   "@tanstack/react-router",
   "@tanstack/react-start",
+  "dayjs",
   "drizzle-kit",
   "drizzle-orm",
   "oxfmt",
@@ -128,6 +130,7 @@ await walk(root);
 
 let notificationStyles = 0;
 let notificationComponents = 0;
+let datesStyles = 0;
 for (const file of files) {
   const text = await readFile(file, "utf8");
   const name = relative(root, file);
@@ -143,11 +146,13 @@ for (const file of files) {
     }
     notificationStyles += text.split("@mantine/notifications/styles.css").length - 1;
     notificationComponents += text.match(/<Notifications(?:\s|\/|>)/g)?.length ?? 0;
+    datesStyles += text.split("@mantine/dates/styles.css").length - 1;
   }
 }
 
 if (notificationStyles !== 1) fail(`expected one Mantine notifications stylesheet import; found ${notificationStyles}`);
 if (notificationComponents !== 1) fail(`expected one root Notifications component; found ${notificationComponents}`);
+if (datesStyles !== 1) fail(`expected one Mantine dates stylesheet import; found ${datesStyles}`);
 
 const wranglerConfig = files.find((file) => /wrangler\.(jsonc?|toml)$/.test(file));
 if (!wranglerConfig) fail("missing Wrangler configuration");

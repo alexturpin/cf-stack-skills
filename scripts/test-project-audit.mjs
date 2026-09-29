@@ -15,11 +15,13 @@ const runtimeMajor = Number(runtimeVersion.split(".")[0]);
 
 const requiredPackages = [
   "@mantine/core",
+  "@mantine/dates",
   "@mantine/notifications",
   "@tanstack/react-form",
   "@tanstack/react-query",
   "@tanstack/react-router",
   "@tanstack/react-start",
+  "dayjs",
   "drizzle-kit",
   "drizzle-orm",
   "oxfmt",
@@ -94,7 +96,7 @@ try {
   );
   await put(
     "src/root.tsx",
-    'import "@mantine/notifications/styles.css";\nexport const root = <Notifications />;\n',
+    'import "@mantine/core/styles.css";\nimport "@mantine/dates/styles.css";\nimport "@mantine/notifications/styles.css";\nexport const root = <Notifications />;\n',
   );
   await put(
     "wrangler.jsonc",
@@ -117,6 +119,28 @@ try {
   if (passing.stderr.includes("migrations_pattern")) {
     throw new Error(`top-level SQL should not require migrations_pattern\n${passing.stderr}`);
   }
+
+  for (const dependency of ["@mantine/dates", "dayjs"]) {
+    const incomplete = structuredClone(manifest);
+    delete incomplete.dependencies[dependency];
+    await put("package.json", `${JSON.stringify(incomplete, null, 2)}\n`);
+    const missingDependency = runAudit();
+    if (missingDependency.status === 0 || !missingDependency.stderr.includes(`missing package: ${dependency}`)) {
+      throw new Error(`expected missing ${dependency} to fail\n${missingDependency.stderr}`);
+    }
+  }
+  await put("package.json", `${JSON.stringify(manifest, null, 2)}\n`);
+
+  const rootSource = await readFile(join(fixture, "src/root.tsx"), "utf8");
+  for (const count of [0, 2]) {
+    const source = rootSource.replace('import "@mantine/dates/styles.css";\n', 'import "@mantine/dates/styles.css";\n'.repeat(count));
+    await put("src/root.tsx", source);
+    const invalidStyles = runAudit();
+    if (invalidStyles.status === 0 || !invalidStyles.stderr.includes(`expected one Mantine dates stylesheet import; found ${count}`)) {
+      throw new Error(`expected ${count} dates style imports to fail\n${invalidStyles.stderr}`);
+    }
+  }
+  await put("src/root.tsx", rootSource);
 
   await put("src/forbidden.ts", 'export const driver = "better-sqlite3";\n');
   const failing = runAudit();

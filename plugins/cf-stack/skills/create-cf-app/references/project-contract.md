@@ -72,6 +72,7 @@ Generate a short `AGENTS.md` that lists:
 - the stable package scripts;
 - the installed `tanstack`, `wrangler`, `drizzle-kit`, `auth`, `oxlint`, `oxfmt`, `tsc`, and `vitest` CLIs;
 - the requirement to run `pnpm run validate` after changes;
+- the date/time input policy: use `@mantine/dates` pickers by default for date, month, year, time, and date-time selection, including filters; follow `$build-cf-ui` for component selection/setup and `$build-cf-forms` for form adapters; native browser controls require an explicit user request;
 - the local environment convention: use gitignored `.env`, keep `.env.example` updated with safe placeholders, and preserve this choice during later integrations instead of introducing source `.dev.vars` files;
 - the rule that production provisioning, secrets, remote migrations, and deploys need explicit authority.
 
@@ -104,6 +105,7 @@ Do not add automatic commit instructions in either mode. A publish request may c
 
 ## Navigation and feedback
 
+- Install `@mantine/dates` and its required `dayjs` dependency with the other Mantine packages. Import dates styles once at the root after Mantine core styles, and use `$build-cf-ui`'s date/time input rules for all relevant controls.
 - Install `@mantine/notifications` with the other Mantine packages.
 - Import notification styles after Mantine core styles and render one `Notifications` component inside `MantineProvider`.
 - Use notifications for transient non-blocking outcomes, inline UI for field/persistent errors, and Mantine modals for confirmations.

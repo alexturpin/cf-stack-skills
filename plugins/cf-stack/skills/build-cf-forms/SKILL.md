@@ -1,6 +1,6 @@
 ---
 name: build-cf-forms
-description: Build or modify CF forms using TanStack Form, Mantine field components, and Zod validation on client and server. Use for form state, reusable field adapters, submission, validation, server errors, accessibility, or replacing Mantine Form. Do not use for read-only UI or database schema changes without a form.
+description: Build or modify CF forms using TanStack Form, Mantine fields and date/time pickers, and Zod validation on client and server. Use for form state, reusable field adapters, submission, validation, server errors, accessibility, or replacing Mantine Form. Do not use for read-only UI or database schema changes without a form.
 ---
 
 # Build CF forms
@@ -31,7 +31,8 @@ pnpm exec tanstack -- search-docs "<query>" --library form --framework react --j
 - Build small adapters that translate TanStack field state into current Mantine input props.
 - Set accessible labels, descriptions, required state, and error messages.
 - Mark touched/dirty state according to the installed TanStack Form API.
-- Keep value conversion explicit for dates, numbers, booleans, and nullable values. For user-selected dates and times, consider the installed Mantine dates component and convert local picker values explicitly before sending UTC timestamps. Populate local date-time controls from local date and time parts, never by slicing `toISOString()`.
+- Use `$build-cf-ui`'s date/time input rules for component selection and setup: Mantine dates pickers are required by default, including `TimePicker` for time fields. Apply these rules before building field adapters; native browser controls require an explicit user request.
+- Keep value conversion explicit for dates, numbers, booleans, and nullable values. Preserve date-only, month-only, and wall-clock values as domain values; convert to UTC only when the schema represents an instant, using the intended timezone. Populate local date-time controls from local date and time parts, never by slicing `toISOString()`.
 - Use stable field names aligned with the submitted schema.
 - Avoid a universal field abstraction that hides materially different widgets.
 
@@ -49,6 +50,7 @@ For dirty forms that can lose work, use TanStack Router `useBlocker` rather than
 ## Verify
 
 - Test valid, invalid, empty, boundary, and server-rejected submissions.
+- Verify Mantine picker values round-trip through the field adapter and submitted schema, including null/empty values and timezone boundaries when converting instants. Complete `$build-cf-ui`'s picker checks for changed date/time fields.
 - Test keyboard-only use, focus on errors, async pending state, and repeated submission.
 - When navigation blocking is present, test proceed, cancel, save, discard, reload, and tab-close behavior.
 - Confirm the server rejects invalid input independently of client validation.

@@ -1,6 +1,6 @@
 ---
 name: build-cf-ui
-description: Build or refactor CF user interfaces with the latest installed Mantine major, typed TanStack Router navigation, layouts, AppShell, modals, notifications, Tabler icons, skeleton loading states, themes, and CSS Modules. Use for Mantine components, providers, navigation adapters, responsive UI, or visual interaction work. Do not use for TanStack Form behavior or route data architecture unless UI integration requires it.
+description: Build or refactor CF Mantine UI, including date/time pickers, typed TanStack Router navigation, layouts, AppShell, modals, notifications, Tabler icons, loading states, themes, and CSS Modules. Use for Mantine components, providers, navigation adapters, responsive UI, or visual interaction work. Do not use for TanStack Form behavior or route data architecture unless UI integration requires it.
 ---
 
 # Build CF UI
@@ -52,9 +52,19 @@ Consult the installed-major notifications documentation before changing setup or
 
 Use `$build-cf-forms` for validation and form state. Mantine supplies presentation; TanStack Form owns the form model. Never add `@mantine/form` to a CF application.
 
+## Date and time inputs
+
+- Use `@mantine/dates` pickers by default for all user-selected dates, months, years, times, and date-times, including filters outside forms. Choose `DatePickerInput`, `MonthPickerInput`, `YearPickerInput`, `TimePicker`, or `DateTimePicker` for the value being selected; use `DateInput` when typed date entry is needed. Check the installed major's API and value types.
+- Install missing `@mantine/dates` at the same version as the application's other Mantine packages and its required `dayjs` dependency. Import `@mantine/dates/styles.css` once at the root after Mantine core styles.
+- Native browser date/time controls require an explicit user request. This includes HTML inputs and Mantine `TextInput`/`Input` with `type="date"`, `"month"`, `"time"`, or `"datetime-local"`; styling these does not provide a Mantine picker. Use `TimePicker` for time selection rather than the native-backed `TimeInput`.
+- Preserve the application's locale and week-start conventions through the installed dates APIs; add localization only when requested. Use `$build-cf-forms` for field adapters and date/time value conversion.
+
+Consult the installed-major dates documentation before setup or component selection: https://mantine.dev/dates/getting-started/.
+
 ## Verify
 
 - Check current Mantine API signatures rather than trusting copied examples.
+- Inspect changed date/time controls and confirm they use the appropriate Mantine picker, with dates styles loaded. Verify picker opening, keyboard entry/selection, clearing, bounds, and locale behavior when applicable; account for every native-control exception with the user's explicit request.
 - Test narrow and wide layouts, keyboard navigation, active links, pending states, notification deduplication/update behavior, and modal focus.
 - When browser tooling is available and the product does not define its own viewport matrix, verify representative widths around 360, 768, and 1280 pixels. Check the actual breakpoint boundaries, not only the smallest and largest screenshots.
 - Assert that `document.documentElement.scrollWidth <= document.documentElement.clientWidth` unless horizontal scrolling is an intentional, contained interaction. Inspect computed display/visibility for responsive alternatives so hidden controls do not disagree with visible content.

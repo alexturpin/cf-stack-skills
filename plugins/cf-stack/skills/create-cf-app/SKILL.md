@@ -90,7 +90,7 @@ Require these capabilities, allowing official add-ons to choose exact package sp
 
 - TanStack Start, Router, Query, and Form
 - React and Vite
-- Mantine core, hooks, notifications, and modals
+- Mantine core, hooks, dates, notifications, and modals, plus `dayjs` for dates
 - `@tabler/icons-react` (follow `$build-cf-ui` for tree-shakeable imports)
 - Zod
 - Drizzle ORM and Drizzle Kit
@@ -153,6 +153,7 @@ When email is in scope, use the installed `cloudflare-email-service` skill and [
 Read [project-contract.md](references/project-contract.md) and implement every applicable item. In particular:
 
 - Use Mantine's latest-major provider and style imports.
+- Install `@mantine/dates` with the other Mantine packages and `dayjs`; import dates styles once after core styles. Apply `$build-cf-ui`'s date/time input rules whenever scaffolding date, month, year, time, or date-time fields.
 - Install `@mantine/notifications`, import its styles after Mantine core styles, and render one `Notifications` component inside `MantineProvider`.
 - Use Mantine notifications for transient feedback and Mantine modals for confirmations; do not scaffold `alert`, `window.confirm`, or hand-written `beforeunload` handling.
 - Use TanStack Router `useBlocker` for unsaved-change navigation when needed, including its supported browser `beforeunload` integration.
