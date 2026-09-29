@@ -59,6 +59,13 @@ Use `$improve-cf-skills` to review a recent feature or fix for reusable improvem
 ```sh
 npm run validate
 npm run validate:links
+npm run validate:latest-stack
 ```
+
+The latest-stack check uses npm 11.20.0 through `npm exec` so local runs and CI use
+the same verified resolver. npm 10 can report a false Vitest conflict while
+resolving Oxfmt's unused optional Vite+ peer. All stack packages still use `latest`,
+and strict peer-dependency checking remains enabled. The check requires network
+access and does not change the globally installed npm version.
 
 The plugin source is under `plugins/cf-stack`; `.agents/plugins/marketplace.json` makes this repository a Codex marketplace.

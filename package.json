@@ -7,7 +7,7 @@
   "scripts": {
     "validate": "node scripts/validate-repository.mjs && node scripts/test-project-audit.mjs",
     "validate:links": "node scripts/check-links.mjs",
-    "validate:latest-stack": "node scripts/check-latest-stack.mjs"
+    "validate:latest-stack": "npm exec --yes --package=npm@11.20.0 -- node scripts/check-latest-stack.mjs"
   },
   "engines": {
     "node": ">=22"
