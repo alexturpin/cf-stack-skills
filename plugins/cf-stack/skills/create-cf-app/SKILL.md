@@ -166,6 +166,7 @@ Read [project-contract.md](references/project-contract.md) and implement every a
 - Generate binding types after Wrangler configuration changes.
 - Enable Workers observability in Wrangler configuration. When auth or server-side writes exist, use `$instrument-cf-observability` to add structured outcome events, request correlation, and redaction without logging credentials, identity PII, or raw request data.
 - Keep `AGENTS.md` short and CLI-oriented.
+- Include the project contract's continued CF skill-use section in both collaboration styles, respecting explicit project exclusions. Verify that the generated guidance names each relevant skill and requires reading it before implementation and when scope changes.
 - Generate the collaboration section selected during setup: omit it entirely for Developer mode; append the exact Guided builder section from the project contract for Guided mode.
 - In Guided mode, include the one-message `ENGINE ROOM:` technical-response override exactly as defined in the project contract.
 - Keep Git pushes, deployments, secrets, provisioning, and remote migrations explicitly authorized even in Guided mode.

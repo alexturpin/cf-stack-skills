@@ -78,6 +78,35 @@ Generate a short `AGENTS.md` that lists:
 
 Do not copy framework documentation into `AGENTS.md`.
 
+### Continued CF skill use
+
+Include this section in generated `AGENTS.md` for both collaboration styles. Preserve explicit user or project restrictions on CF skill use; adapt the section to those restrictions rather than overriding them.
+
+```md
+## CF Stack skills
+
+This project uses CF Stack. At the start of each task, identify and read the applicable installed `cf-stack:*` skills before implementation. Continue applying them throughout feature work, fixes, refactors, and maintenance; read additional skills when the task's scope changes. Load only the skills relevant to the work.
+
+| Work | Required skill |
+|---|---|
+| Mantine UI, date/time pickers, layouts, navigation, feedback | `cf-stack:build-cf-ui` |
+| Form state, field adapters, validation, submission | `cf-stack:build-cf-forms` |
+| Routes, loaders, server functions, Query hydration | `cf-stack:build-cf-routes` |
+| D1 schemas, queries, migrations, local inspection | `cf-stack:manage-cf-data` |
+| Better Auth setup, sessions, providers, auth guards | `cf-stack:integrate-cf-auth` |
+| New Cloudflare services or infrastructure choices | `cf-stack:choose-cf-infrastructure` |
+| Workers logging, observability, redaction | `cf-stack:instrument-cf-observability` |
+| Dependencies, scripts, TypeScript, lint/format tooling | `cf-stack:maintain-cf-tooling` |
+| Deployment preparation, Wrangler environments, releases | `cf-stack:deploy-cf-app` |
+| Explicitly requested localization or Lingui work | `cf-stack:localize-cf-app` |
+
+Use `cf-stack:create-cf-app` for scaffolding, `cf-stack:update-cf-skills` when asked to update the plugin, and `cf-stack:improve-cf-skills` when asked to review reusable skill improvements.
+
+Use other installed skills as supplements for their relevant workflows while preserving this project's CF integration rules. Resolve conflicts in favor of explicit user instructions and project guidance. Skill use does not authorize deployments, secrets, provisioning, or remote migrations.
+
+Find skills through the current available-skills catalog; use its paths rather than hard-coded plugin cache paths. If a required skill is unavailable, report which one is missing and continue only work supported by the project's documented conventions.
+```
+
 ### Collaboration style
 
 Ask the user to choose Developer or Guided builder during scaffolding. Do not infer their technical ability.
