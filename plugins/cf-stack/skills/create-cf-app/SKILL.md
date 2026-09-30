@@ -112,10 +112,10 @@ Start with latest stable releases. When a verified incompatibility blocks a requ
    pnpm dlx skills add https://github.com/cloudflare/skills --list
    ```
 
-4. Install the focused Workers baseline at project scope for every generated application:
+4. Install the focused Workers baseline at project scope for Codex in every generated application:
 
    ```sh
-   pnpm dlx skills add https://github.com/cloudflare/skills --skill workers-best-practices wrangler --agent '*' -y
+   pnpm dlx skills add https://github.com/cloudflare/skills --skill workers-best-practices wrangler --agent codex -y
    ```
 
 5. Add only skills justified by requirements already in scope:
@@ -131,12 +131,12 @@ Start with latest stable releases. When a verified incompatibility blocks a requ
 6. When auth is enabled, install Better Auth's security skill:
 
    ```sh
-   pnpm dlx skills add https://github.com/better-auth/skills --skill better-auth-security-best-practices --agent '*' -y
+   pnpm dlx skills add https://github.com/better-auth/skills --skill better-auth-security-best-practices --agent codex -y
    ```
 
    Add `email-and-password-best-practices`, `organization-best-practices`, or `two-factor-authentication-best-practices` only when the corresponding feature is already requested. Do not install generic `create-auth` or `better-auth-best-practices`; `$integrate-cf-auth` owns the CF/D1 integration and reads current Better Auth documentation directly.
-7. Do not pass `-g` or `--global`. Verify that the installer created project-local agent skill directories and that `skills-lock.json` records only the selected skills.
-8. Let the installer manage repository-local agent directories; do not copy upstream skill contents into custom CF skill folders.
+7. Do not pass `-g` or `--global`. Verify that the installer placed the selected skills in `.agents/skills/` for Codex and that `skills-lock.json` records only those skills.
+8. Let the installer manage `.agents/skills/`; do not copy upstream skill contents into custom CF skill folders.
 
 ### Help users view local test emails
 
