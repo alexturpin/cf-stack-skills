@@ -4,11 +4,16 @@
 
 - Resolve every named stack package from the current stable npm tag at scaffold time.
 - Use pnpm exclusively and commit `pnpm-lock.yaml`; do not retain npm, Yarn, or Bun lockfiles.
+- Resolve unreviewed dependency build scripts with explicit `allowBuilds` decisions: allow required scripts and deny intentionally unused ones. Keep strict checks enabled; do not approve all scripts to pass CI.
 - Set the `packageManager` field in `package.json` to the resolved pnpm version.
 - Resolve the latest active LTS Node.js release at scaffold time from an installed version manager or Node.js's official release index; do not bake a version into the skill.
 - Write the resolved full version to `.node-version`, set `engines.node` to `>=<resolved-version> <<next-major>`, activate it before dependency installation, and configure CI to read the same file.
 - Use TypeScript 7 or newer, Mantine 9 or newer, and Wrangler with Local Explorer support.
 - Start with latest stable releases. When a verified incompatibility blocks a required integration, use the smallest supported compatibility adjustment within the user’s authorized scope. Document the conflicting versions, evidence, selected pin, and condition for removing it. Validate the resulting combination. Ask only when resolution would change requirements or violate an explicit version constraint. Never silently downgrade or bypass peer checks.
+
+## Clean-install verification
+
+After scaffolding or changing dependencies, pnpm versions, or build policies, verify `pnpm install --frozen-lockfile` in a disposable clean copy using the pinned Node and pnpm versions, without existing dependencies or cached build outputs. Then run the project’s CI checks.
 
 ## Required scripts
 

@@ -11,7 +11,7 @@ Use locally installed CLIs, machine-readable output, and reproducible lockfiles.
 
 Read:
 
-- `package.json` and the lockfile;
+- `package.json`, the lockfile, and `pnpm-workspace.yaml`;
 - Node and pnpm versions, `.node-version`, `engines.node`, and `packageManager`;
 - `tsconfig` files;
 - Oxfmt and Oxlint configuration;
@@ -37,6 +37,12 @@ Run local version and help commands before changing options. Prefer `pnpm exec <
 4. Start with latest stable releases. When a verified incompatibility blocks a required integration, use the smallest supported compatibility adjustment within the user’s authorized scope. Document the conflicting versions, evidence, selected pin, and condition for removing it. Validate the resulting combination. Ask only when resolution would change requirements or violate an explicit version constraint. Never silently downgrade or bypass peer checks.
 
 Resolve the latest active LTS Node.js at change time through an installed version manager or Node.js's official release index at https://nodejs.org/dist/index.json. Write the full version to `.node-version`, set `engines.node` to `>=<resolved-version> <<next-major>`, activate it before installation and validation, and make CI read the same file. Do not preserve a stale version merely because it was previously pinned. Keep Wrangler locally installed so every developer and agent runs the locked version.
+
+## Review dependency build policy
+
+Resolve unreviewed dependency build scripts with explicit `allowBuilds` decisions: allow required scripts and deny intentionally unused ones. Keep strict checks enabled; do not approve all scripts to pass CI.
+
+Check the installed pnpm version’s supported configuration before changing build policy. Make decisions from this project’s actual dependency use rather than copying another project’s package list.
 
 ## Keep the fast TypeScript toolchain
 
@@ -74,6 +80,8 @@ Keep these package scripts stable unless an upstream CLI has removed the capabil
 Use package scripts for stable workflows and direct CLI commands for discovery or one-off diagnostics. Keep `AGENTS.md` synchronized with the commands agents can actually run.
 
 ## Verify
+
+After scaffolding or changing dependencies, pnpm versions, or build policies, verify `pnpm install --frozen-lockfile` in a disposable clean copy using the pinned Node and pnpm versions, without existing dependencies or cached build outputs. Then run the project’s CI checks.
 
 Run:
 

@@ -182,6 +182,8 @@ Generate the auth schema through the current Auth CLI, then generate a Drizzle m
 
 ## Verify
 
+First complete the [project contract’s clean-install verification](references/project-contract.md#clean-install-verification).
+
 Run the repository's commands in this order:
 
 1. `pnpm run cf:typegen`
