@@ -1,6 +1,6 @@
 ---
 name: deploy-cf-app
-description: Set up GitHub Actions deployment on main pushes, prepare or run releases, and troubleshoot a CF TanStack Start application on Cloudflare Workers. Use for deployment workflows, Wrangler environments, D1 migration ordering, secrets, previews, and release verification. Production mutations require user authority or an authorized deployment workflow.
+description: Set up GitHub Actions deployment on main pushes, prepare or run releases, and troubleshoot a CF TanStack Start application on Cloudflare Workers. Use for deployment workflows, Wrangler environments, D1 migration ordering, secrets, previews, commit attribution, and release verification. Production mutations require user authority or an authorized deployment workflow.
 ---
 
 # Deploy a CF application
@@ -37,11 +37,21 @@ Use the locally installed Wrangler CLI and maintained Cloudflare skills. When as
 - For Cloudflare Vite builds, select the target environment at build time through `CLOUDFLARE_ENV`; see [Cloudflare environments](https://developers.cloudflare.com/workers/vite-plugin/reference/cloudflare-environments/). Before remote migrations, verify the generated Wrangler configuration matches the intended account, Worker, database IDs, and required bindings/variables. Deploy that generated configuration; deployment flags cannot retarget a flattened build.
 - Use the target environment explicitly for migration status and application, and ensure it matches the deployed build's D1 name, ID, and migration paths. Skip D1 steps for applications without D1.
 - Before applying remote migrations, verify required runtime secret names exist on the target Worker without reading values; use [Workers secret configuration](https://developers.cloudflare.com/workers/configuration/secrets/) as the source for required names. Put this preflight in the shared release script so CI and manual releases fail before database mutation. Wrangler's deploy-time required-secret validation runs after migrations in this sequence.
+- Add release metadata as described below so Cloudflare versions can be traced to the checked-out commit and GitHub run.
 - After deployment, verify the deployed version and run smoke checks against the health path and a critical route; fail the job when verification fails.
 - Preserve existing environment protection rules. Automatic deployment on `main` is the default; add a manual production approval gate only when requested or required by project policy.
 - Document required secrets, target resources, and the release trigger in the project. Report missing credentials or resources as setup prerequisites; do not claim the pipeline is operational until an authorized run succeeds.
 
 A request for automatic deployment on `main` authorizes the configured CI migrations and deployments on subsequent pushes once enabled. Publishing/enabling the workflow, setting secrets, provisioning resources, and manually triggering an initial release still follow the user's Git and external-action authority. Workflow setup alone does not require a manual release.
+
+## Record release metadata
+
+- Derive the full commit SHA, subject, and author from the checked-out Git commit. In CI, confirm that SHA matches `GITHUB_SHA`. Keep the commit author separate from the actor who initiated the workflow (`GITHUB_ACTOR`) and the actor who triggered the current attempt (`GITHUB_TRIGGERING_ACTOR`); these can differ on reruns. See [GitHub workflow variables](https://docs.github.com/en/actions/reference/workflows-and-actions/variables).
+- Use the installed Wrangler's supported [`deploy --tag` and `--message` options](https://developers.cloudflare.com/workers/wrangler/commands/workers/#deploy): tag the version with the full commit SHA and include the commit subject, author, triggering actor, and workflow-run URL in a bounded message. Keep metadata construction in the shared release script; use CLI help/current limits rather than assuming flag support or length limits.
+- Pass metadata through quoted environment variables or argument arrays. Treat commit text as data rather than interpolating it into executable shell code. For authorized local releases, derive metadata from local Git and explicitly label builds containing uncommitted changes.
+- Capture the uploaded Cloudflare version ID from this release, then read back its tag/message to verify the commit association. Use that exact version ID rather than assuming the newest version belongs to the current run.
+- Write a [GitHub job summary](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-commands#adding-a-job-summary) linking the commit and workflow run and recording the commit author, initiating/triggering actors, run attempt, target Worker/environment, Cloudflare version ID, migration result, and smoke-test result. Preserve release identifiers in the summary when later verification fails.
+- Explain that tags/messages provide Git attribution while Cloudflare's native author/source labels still reflect its deployment identity and upload path. These annotations do not guarantee a change to the dashboard's `by Unknown` or `Manually deployed` labels.
 
 ## Release ordering
 
@@ -73,4 +83,4 @@ Do not run remote migrations concurrently with another release. Do not treat Wor
 
 ## Verify
 
-Record the validated commit, package lock state, target environment, migration result, deployment/version identifier, and smoke-test result. Stop and report if any verification is ambiguous.
+Record the release metadata above, package lock state, migration result, and smoke-test result. Stop and report if any verification is ambiguous.
