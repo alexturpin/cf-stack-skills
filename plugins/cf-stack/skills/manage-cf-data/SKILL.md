@@ -48,6 +48,7 @@ pnpm run db:migrate:local
 - `db:check` must run `drizzle-kit check`.
 - `db:migrate:local` must run `wrangler d1 migrations apply DB --local`.
 - `db:migrate:remote` must run the same Wrangler command with `--remote` and requires explicit authority.
+- For requested deployment setup, use `$deploy-cf-app`: the authorized main-push GitHub Actions workflow calls `deploy`, which applies remote migrations before deploying the Worker. CI does not generate new migrations; commit reviewed SQL with the schema change.
 - Configure `migrations_dir` and `migrations_pattern` to match Drizzle's actual output.
 - Keep one Wrangler migration table/ledger for local and remote D1 environments.
 
@@ -69,4 +70,4 @@ Drizzle Studio's D1 HTTP driver targets deployed D1 credentials. Do not present 
 - Apply to a clean local D1 database and an existing migrated local database.
 - Test constraints, defaults, relation queries, and rollback/error behavior where relevant.
 - Run `pnpm run cf:typegen`, `pnpm run db:check`, relevant tests, `pnpm run typecheck`, and `pnpm run build`.
-- Before a remote migration, list pending remote migrations, confirm the target account/database, and obtain explicit authorization.
+- Before a remote migration, list pending remote migrations, confirm the target account/database, and verify user authority or the configured deployment workflow's standing authority.

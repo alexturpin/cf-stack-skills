@@ -36,10 +36,12 @@ After scaffolding or changing dependencies, pnpm versions, or build policies, ve
 | `db:query:local` | Pass arguments to `wrangler d1 execute DB --local`. |
 | `db:status:local` | Run `wrangler d1 migrations list DB --local`. |
 | `db:status:remote` | Run `wrangler d1 migrations list DB --remote`. |
-| `deploy` | Validate, migrate remote D1, then deploy only with explicit authority. |
+| `deploy` | Validate, migrate remote D1, then deploy; stop on failure. Run with user authority or from the authorized deployment workflow. |
 | `tail` | Run Wrangler tail for the configured Worker. |
 
 Add `auth:generate` and `auth:info` only when Better Auth is enabled.
+
+When deployment setup is requested, use `$deploy-cf-app` to create or update a GitHub Actions workflow for pushes to `main`. That workflow calls `deploy`; keep migration and deployment ordering in the script. Follow the deployment skill's concurrency, credentials, environment, and authorization rules. Scaffolding alone does not enable automatic production releases.
 
 ## TypeScript and Oxc
 
@@ -79,7 +81,8 @@ Generate a short `AGENTS.md` that lists:
 - the requirement to run `pnpm run validate` after changes;
 - the date/time input policy: use `@mantine/dates` pickers by default for date, month, year, time, and date-time selection, including filters; follow `$build-cf-ui` for component selection/setup and `$build-cf-forms` for form adapters; native browser controls require an explicit user request;
 - the local environment convention: use gitignored `.env`, keep `.env.example` updated with safe placeholders, and preserve this choice during later integrations instead of introducing source `.dev.vars` files;
-- the rule that production provisioning, secrets, remote migrations, and deploys need explicit authority.
+- the rule that production provisioning, secrets, remote migrations, and deploys need explicit authority, including standing authority for releases performed by a configured deployment workflow;
+- when deployment is configured, its workflow, release branch, target environment, and the fact that pushing to that branch triggers remote migrations and deployment.
 
 Do not copy framework documentation into `AGENTS.md`.
 

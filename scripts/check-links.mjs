@@ -14,6 +14,8 @@ const urls = [
   "https://better-auth.com/llms.txt",
   "https://zod.dev/llms.txt",
   "https://developers.cloudflare.com/workers/llms.txt",
+  "https://developers.cloudflare.com/workers/ci-cd/external-cicd/github-actions/",
+  "https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/control-deployments",
   "https://developers.cloudflare.com/workers/vite-plugin/reference/cloudflare-environments/",
   "https://developers.cloudflare.com/workers/observability/",
   "https://developers.cloudflare.com/d1/llms.txt",

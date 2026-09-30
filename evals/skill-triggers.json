@@ -111,6 +111,7 @@
   },
   "deploy-cf-app": {
     "positive": [
+      "Set up deployment so GitHub Actions applies D1 migrations and deploys on every push to main.",
       "Prepare this CF app for a production Cloudflare deployment.",
       "Diagnose why the deployed Worker cannot see its D1 binding."
     ],

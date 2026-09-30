@@ -1,11 +1,11 @@
 ---
 name: deploy-cf-app
-description: Prepare, validate, preview, deploy, release, monitor, or troubleshoot a CF TanStack Start application on Cloudflare Workers. Use for Wrangler bindings, generated Worker types, D1 migration ordering, secrets, environments, CI, preview deployments, logs, tailing, versions, or production releases. Do not mutate production resources, secrets, remote D1, or deployments without explicit authorization.
+description: Set up GitHub Actions deployment on main pushes, prepare or run releases, and troubleshoot a CF TanStack Start application on Cloudflare Workers. Use for deployment workflows, Wrangler environments, D1 migration ordering, secrets, previews, and release verification. Production mutations require user authority or an authorized deployment workflow.
 ---
 
 # Deploy a CF application
 
-Use the locally installed Wrangler CLI and maintained Cloudflare skills. Separate read-only preparation from production mutations.
+Use the locally installed Wrangler CLI and maintained Cloudflare skills. When asked to set up deployment, create or update GitHub Actions automation for pushes to `main` unless the user specifies another release trigger.
 
 ## Ground the release
 
@@ -26,14 +26,29 @@ Use the locally installed Wrangler CLI and maintained Cloudflare skills. Separat
 - Use a preview or temporary deployment only when the user authorizes the external deployment action.
 - Prefer Wrangler configuration as the source of truth over dashboard-only edits.
 
+## Set up GitHub Actions deployment
+
+- Create or update a workflow under `.github/workflows/` with `push.branches: [main]`. Keep pull-request validation separate from the production release job.
+- Read current [Cloudflare GitHub Actions guidance](https://developers.cloudflare.com/workers/ci-cd/external-cicd/github-actions/) and [GitHub deployment controls](https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/control-deployments) when writing the workflow; use current supported actions.
+- Check out the triggering commit, use `.node-version` and the pinned `packageManager` pnpm version, and install with `pnpm install --frozen-lockfile`.
+- Run binding type generation and check for generated type drift, then `pnpm run db:check` and `pnpm run deploy`. The `deploy` script must validate, apply remote D1 migrations, and deploy the Worker in that order, stopping on any failure. Keep this sequence in the script rather than duplicating migration/deployment commands in the workflow.
+- Run migrations and deployment in one release job with a concurrency group shared by every workflow targeting that Worker/database environment and `cancel-in-progress: false`. Do not interrupt an active migration/deployment for a newer push.
+- Use `permissions: contents: read` unless the workflow needs additional GitHub permissions. Provide `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` to release steps from GitHub secrets; scope the token to the target account and required Workers/D1 permissions. Validation jobs do not need deployment credentials.
+- Use the same explicit Wrangler environment for migration status, migration application, and deployment; verify that environment's D1 name, ID, and migration paths. Skip D1 steps for applications without D1.
+- After deployment, verify the deployed version and run smoke checks against the health path and a critical route; fail the job when verification fails.
+- Preserve existing environment protection rules. Automatic deployment on `main` is the default; add a manual production approval gate only when requested or required by project policy.
+- Document required secrets, target resources, and the release trigger in the project. Report missing credentials or resources as setup prerequisites; do not claim the pipeline is operational until an authorized run succeeds.
+
+A request for automatic deployment on `main` authorizes the configured CI migrations and deployments on subsequent pushes once enabled. Publishing/enabling the workflow, setting secrets, provisioning resources, and manually triggering an initial release still follow the user's Git and external-action authority. Workflow setup alone does not require a manual release.
+
 ## Release ordering
 
-When explicitly authorized to deploy:
+For an authorized manual release or the configured CI release job:
 
 1. Reconfirm the exact target immediately before mutation.
 2. Review pending migration SQL and backup/rollback implications.
-3. Apply remote D1 migrations through `wrangler d1 migrations apply DB --remote`.
-4. Deploy the Worker with the repository's `deploy` script or local Wrangler.
+3. Run the repository's `deploy` script: validate, apply remote D1 migrations through `wrangler d1 migrations apply DB --remote`, then deploy the Worker. In CI, target confirmation and failure checks must be non-interactive. Apply migrations exactly once per release, inside the script.
+4. Stop on migration or deployment failure and report the failed stage; a migration failure must prevent Worker deployment.
 5. Verify the deployed version, health path, critical route, auth callback if enabled, and database compatibility.
 6. Observe logs with Wrangler tail without exposing sensitive payloads.
 
@@ -43,9 +58,7 @@ Do not run remote migrations concurrently with another release. Do not treat Wor
 
 - Pin the lockfile and use the latest active LTS Node.js selected by the repository.
 - Run formatting, lint, stable typecheck, tests, build, binding type generation, and migration checks.
-- Keep Cloudflare credentials in CI secrets with least privilege.
-- Apply remote migrations in one serialized release job before deployment.
-- Require an explicit protected environment/approval for production when the repository uses GitHub Actions.
+- Follow the GitHub Actions setup above for release triggers, credentials, concurrency, and migration ordering.
 - Avoid automatic production provisioning from pull-request jobs.
 
 ## Diagnose

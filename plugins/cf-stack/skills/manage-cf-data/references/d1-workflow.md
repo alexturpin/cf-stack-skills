@@ -44,5 +44,4 @@ Do not copy this pattern blindly. Inspect the current Drizzle output and choose 
 
 ## Remote safety
 
-Treat remote D1 migrations as a production mutation. Confirm the Worker environment, account, database name and ID, pending SQL, backup expectations, and authorization immediately before applying.
-
+Treat remote D1 migrations as a production mutation. Confirm the Worker environment, account, database name and ID, pending SQL, backup expectations, and user authority or standing authority from the configured deployment workflow immediately before applying. For CI releases, encode target and pending-migration checks in the workflow or release script; review SQL and backup implications before merging to the release branch.
