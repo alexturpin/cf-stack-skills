@@ -7,6 +7,8 @@ description: Update or check the installed CF Stack Codex plugin from its config
 
 Refresh `cf-stack@cf-stack-skills` from its existing source and verify the installed copy. A request to check the version is read-only; a request to update authorizes the refresh and reinstall.
 
+Use `$migrate-cf-project` when the request is to adopt changed CF guidance in an existing application's committed files. Refreshing this plugin does not migrate application artifacts or project-local skills.
+
 ## Identify the installation
 
 1. Run `codex plugin marketplace list` and `codex plugin list`. Locate CF Stack's marketplace root, source plugin directory, installed status, and version. If the CLI differs, inspect `codex plugin --help` and the relevant subcommand help.

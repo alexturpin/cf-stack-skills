@@ -117,7 +117,7 @@ This project uses CF Stack. At the start of each task, identify and read the app
 | Deployment preparation, Wrangler environments, releases | `cf-stack:deploy-cf-app` |
 | Explicitly requested localization or Lingui work | `cf-stack:localize-cf-app` |
 
-Use `cf-stack:create-cf-app` for scaffolding, `cf-stack:update-cf-skills` when asked to update the plugin, and `cf-stack:improve-cf-skills` when asked to review reusable skill improvements.
+Use `cf-stack:create-cf-app` for scaffolding, `cf-stack:update-cf-skills` when asked to update the plugin, `cf-stack:migrate-cf-project` when asked to adopt CF skill changes in this project's committed artifacts, and `cf-stack:improve-cf-skills` when asked to review reusable skill improvements.
 
 Use other installed skills as supplements for their relevant workflows while preserving this project's CF integration rules. Resolve conflicts in favor of explicit user instructions and project guidance. Skill use does not authorize deployments, secrets, provisioning, or remote migrations.
 

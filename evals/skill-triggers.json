@@ -1,4 +1,16 @@
 {
+  "migrate-cf-project": {
+    "positive": [
+      "Bring this initialized CF repo's AGENTS.md and project-local skills up to date with recent CF Stack commits.",
+      "Audit this application's scaffold artifacts against the public CF Stack repository without editing files.",
+      "Use our recorded CF Stack commit to apply relevant policy changes while preserving custom project guidance."
+    ],
+    "negative": [
+      "Refresh my installed CF Stack plugin from its marketplace.",
+      "Upgrade all application dependencies to their latest stable versions.",
+      "Review this feature and propose improvements to the CF skills."
+    ]
+  },
   "update-cf-skills": {
     "positive": [
       "Update my installed CF Stack plugin to the latest version from its marketplace.",
@@ -7,6 +19,7 @@
     "negative": [
       "Upgrade Wrangler and TanStack Start in my application.",
       "Update the official Cloudflare skills installed in this project.",
+      "Adopt recent CF Stack policy changes in this repo's committed AGENTS.md and configuration.",
       "Check for a Codex app update."
     ]
   },

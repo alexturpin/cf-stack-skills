@@ -17,6 +17,7 @@ const expectedSkills = [
   "localize-cf-app",
   "maintain-cf-tooling",
   "manage-cf-data",
+  "migrate-cf-project",
   "update-cf-skills",
 ];
 

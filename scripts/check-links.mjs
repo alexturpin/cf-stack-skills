@@ -1,4 +1,5 @@
 const urls = [
+  "https://github.com/alexturpin/cf-stack-skills",
   "https://nodejs.org/dist/index.json",
   "https://tanstack.com/start/v1/llms.txt",
   "https://tanstack.com/router/v1/llms.txt",

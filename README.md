@@ -34,6 +34,18 @@ CF Stack is an independent integration plugin, not an official Cloudflare skill 
 
 The application-creation workflow separately installs selected upstream Cloudflare skills, such as `workers-best-practices` and `wrangler`, into the project. Those retain their upstream names. Check the project's `skills-lock.json` for their source; updating CF Stack does not update these separately installed skills.
 
+## Update an existing project's artifacts
+
+Plugin updates change the guidance Codex loads; they do not rewrite files already committed in an application. To adopt changed guidance in an existing repo, ask:
+
+```text
+Use $migrate-cf-project to bring this repo's committed guidance, project-local skills, and configuration up to date with CF Stack.
+```
+
+The skill compares against the public Git repository at a pinned commit, using a recorded or supplied baseline when available. Older projects without a baseline get an initial comparison against the current applicable contract. It preserves project-specific conventions and optional feature choices, applies relevant local edits, and validates the result. A request to audit instead produces findings without editing files.
+
+After a complete, validated migration it records the reviewed commit and any exceptions or deferred work in `.cf-stack/skills-state.json`, making subsequent comparisons incremental. This record tracks reviewed policy, not a claim that every convention was adopted. The comparison also works without a locally installed plugin or source checkout by reading the public skill files directly.
+
 ## Create a new application
 
 Start the Codex task from the parent directory where new applications should live, or ensure Codex can write there. Invoke the skill explicitly or ask naturally:

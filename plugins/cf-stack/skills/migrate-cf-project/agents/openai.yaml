@@ -1,0 +1,4 @@
+interface:
+  display_name: "CF Stack: Migrate Project"
+  short_description: "Adopt CF skill changes in an existing project"
+  default_prompt: "Use $migrate-cf-project to compare this repo with public CF Stack history and apply relevant project updates while preserving local conventions."
