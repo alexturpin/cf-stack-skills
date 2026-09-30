@@ -78,6 +78,23 @@ Generate a short `AGENTS.md` that lists:
 
 Do not copy framework documentation into `AGENTS.md`.
 
+### Commit messages
+
+Include this section in generated `AGENTS.md` for both collaboration styles:
+
+```md
+## Commit messages
+
+- Use Conventional Commits: `<type>[optional scope][optional !]: <description>`.
+- Choose from `feat` (new behavior), `fix` (bug fix), `refactor` (restructure without changing behavior), `perf` (performance), `docs`, `test`, `build` (dependencies or build tooling), `ci`, `chore` (other maintenance), and `revert`.
+- Use a scope only when it identifies a useful application area, such as `auth` or `billing`.
+- Write a lowercase imperative description without a trailing period. Keep the full subject at most 72 characters, for example `feat: add account settings` or `fix(billing): correct invoice totals`.
+- Mark breaking changes with `!` before the colon and explain the impact and required migration in the body.
+- Add a body when the reason or tradeoff needs explanation; separate it from the subject with a blank line.
+```
+
+This specifies message format, not commit authorization. Do not add commit hooks or release automation as part of scaffolding unless requested.
+
 ### Continued CF skill use
 
 Include this section in generated `AGENTS.md` for both collaboration styles. Preserve explicit user or project restrictions on CF skill use; adapt the section to those restrictions rather than overriding them.
