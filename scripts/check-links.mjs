@@ -17,6 +17,7 @@ const urls = [
   "https://developers.cloudflare.com/workers/ci-cd/external-cicd/github-actions/",
   "https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/control-deployments",
   "https://developers.cloudflare.com/workers/vite-plugin/reference/cloudflare-environments/",
+  "https://developers.cloudflare.com/workers/configuration/secrets/",
   "https://developers.cloudflare.com/workers/observability/",
   "https://developers.cloudflare.com/d1/llms.txt",
   "https://oxc.rs/docs/guide/usage/linter.md",
