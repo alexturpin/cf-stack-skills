@@ -41,6 +41,20 @@ if (!entry?.policy?.installation || !entry?.policy?.authentication || !entry?.ca
   fail("marketplace entry is missing policy or category metadata");
 }
 
+// Claude Code packaging: same plugin directory and skills, separate manifests.
+const claudePlugin = await readJson(new URL(".claude-plugin/plugin.json", pluginRoot));
+if (claudePlugin.name !== "cf-stack") fail("Claude plugin name must be cf-stack");
+if ("version" in claudePlugin) {
+  fail("Claude plugin must omit version so installs track commits to plugins/cf-stack");
+}
+if (!claudePlugin.description || !claudePlugin.author?.name) fail("Claude plugin metadata is incomplete");
+const claudeMarketplace = await readJson(new URL(".claude-plugin/marketplace.json", root));
+if (claudeMarketplace.name !== marketplace.name) fail("Claude and Codex marketplace names must match");
+if (!claudeMarketplace.owner?.name) fail("Claude marketplace is missing owner.name");
+const claudeEntry = claudeMarketplace.plugins?.find((item) => item.name === "cf-stack");
+if (claudeEntry?.source !== "./plugins/cf-stack") fail("Claude marketplace source must be ./plugins/cf-stack");
+if (claudeEntry && "version" in claudeEntry) fail("Claude marketplace entry must omit version");
+
 const triggerEvals = await readJson(new URL("evals/skill-triggers.json", root));
 for (const name of expectedSkills) {
   const cases = triggerEvals[name];

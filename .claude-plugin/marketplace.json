@@ -1,0 +1,16 @@
+{
+  "name": "cf-stack-skills",
+  "owner": {
+    "name": "Alex Turpin",
+    "url": "https://github.com/alexturpin"
+  },
+  "description": "CF Stack skills for Claude Code and Codex.",
+  "plugins": [
+    {
+      "name": "cf-stack",
+      "source": "./plugins/cf-stack",
+      "description": "CLI-first skills for TanStack Start applications on Cloudflare Workers with Mantine, Drizzle D1, Better Auth, Lingui, and structured observability.",
+      "category": "Developer Tools"
+    }
+  ]
+}

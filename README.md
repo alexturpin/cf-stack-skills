@@ -1,6 +1,6 @@
 # CF Stack Skills
 
-An installable Codex skill suite for building opinionated applications using TanStack Start on Cloudflare Workers with Mantine, TanStack Query and Form, Zod, Drizzle D1, optional Better Auth and Lingui localization, and structured Workers observability.
+An installable skill suite for Codex and Claude Code for building opinionated applications using TanStack Start on Cloudflare Workers with Mantine, TanStack Query and Form, Zod, Drizzle D1, optional Better Auth and Lingui localization, and structured Workers observability.
 
 The plugin contains integration policy and repeatable workflows. It deliberately delegates framework API reference material to maintained package skills, CLIs, and upstream `llms.txt` indexes.
 
@@ -12,6 +12,30 @@ codex plugin add cf-stack@cf-stack-skills
 ```
 
 Start a new task after installation so Codex receives the bundled skill catalog.
+
+### Claude Code
+
+The same `plugins/cf-stack` directory is also a Claude Code plugin; its skills load as `cf-stack:<skill>`.
+
+```sh
+claude plugin marketplace add alexturpin/cf-stack-skills
+claude plugin install cf-stack@cf-stack-skills
+```
+
+In the Claude desktop app's Code tab, use **+** → **Add plugins** instead. Start a new session afterwards.
+
+To enable it for a project, commit this to the project's `.claude/settings.json`, then install once per clone with `claude plugin install cf-stack@cf-stack-skills --scope project`:
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "cf-stack-skills": { "source": { "source": "github", "repo": "alexturpin/cf-stack-skills" } }
+  },
+  "enabledPlugins": { "cf-stack@cf-stack-skills": true }
+}
+```
+
+The Claude manifest has no `version`, so an install tracks commits that touch `plugins/cf-stack`. Refresh with `claude plugin marketplace update cf-stack-skills` and `claude plugin update cf-stack@cf-stack-skills`. Skill text mentions `$skill-name` and Codex in places; in Claude Code read those as the `cf-stack:skill-name` skill and the current agent.
 
 ## Update
 
