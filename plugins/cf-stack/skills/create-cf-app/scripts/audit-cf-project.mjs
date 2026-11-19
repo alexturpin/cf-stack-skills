@@ -100,7 +100,9 @@ const guidedSignals = [
   "When a message begins with `ENGINE ROOM:`",
   "Apply this override to that message only",
   "When the user asks to publish, share, or go live",
-  "Do not push, deploy, modify secrets, provision resources, or migrate remote data unless the user explicitly asks",
+  "Automatically commit and push completed, verified work as a backup",
+  "Keep unapproved work on a branch that does not trigger deployment",
+  "A backup is not approval to publish",
 ];
 if (expectedCollaboration === "guided") {
   if (!agentText.includes(collaborationHeading)) fail("guided AGENTS.md is missing its collaboration heading");

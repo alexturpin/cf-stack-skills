@@ -7,18 +7,20 @@ description: Scaffold or bootstrap a new CF application using current TanStack S
 
 Create a current application from maintained CLIs and small integration edits. Do not copy an old starter tree.
 
+Use `$setup-cf-workspace` for first-time onboarding or missing local/GitHub prerequisites. Resume scaffolding after local readiness; account setup may wait. Keep the target empty until the scaffold is generated.
+
 ## Establish inputs
 
 1. Read the request for an application name, destination, and collaboration style. Do not ask again for inputs that are already explicit.
 2. If the application name is missing, ask for it before creating files. If the parent directory is missing and cannot be safely inferred from the current writable workspace, ask for both in one concise question: "What should the application be called, and in which parent directory should I create it?"
-3. If the collaboration style is missing, ask: "How should Codex collaborate on this project: Developer (concise technical communication; you control Git and releases) or Guided builder (plain-language updates; Codex makes routine implementation decisions and keeps the app runnable)?" Never infer technical ability from the user's language or label the user as technical or non-technical.
+3. If the collaboration style is missing, ask: "How should we collaborate on this project: Developer (concise technical communication; you control Git and releases) or Guided builder (plain-language updates; the agent implements, previews, and automatically backs up verified work, publishing when you ask)?" Never infer technical ability from the user's language or label the user as technical or non-technical.
 4. Record exactly one collaboration style:
    - `developer`: generate no collaboration-style section in `AGENTS.md`.
    - `guided`: append the Guided builder section from [project-contract.md](references/project-contract.md).
 5. Normalize the application name to a valid kebab-case directory and npm package name. Preserve the human-readable name separately when the application needs a display title.
 6. Resolve the absolute target as `<parent-directory>/<application-slug>` and show that exact path before mutation. Run the TanStack CLI from the parent directory with the slug as its target.
 7. Confirm the target is safe and either absent or empty. Never scaffold into an existing application repository or merge into a non-empty directory.
-8. Confirm Codex can write to the parent directory. If the active workspace is rooted elsewhere, request narrowly scoped permission or tell the user to start the task from the intended parent directory; do not create the app inside the current repository as a workaround.
+8. Confirm the current agent can write to the parent directory. If the active workspace is rooted elsewhere, request narrowly scoped permission or tell the user to start the task from the intended parent directory; do not create the app inside the current repository as a workaround.
 9. Use pnpm exclusively for scaffolding, dependency installation, package scripts, and one-off package CLIs. Do not offer npm, Yarn, or Bun as alternatives. Commit `pnpm-lock.yaml`, set the `packageManager` field in `package.json` to the resolved pnpm version, and do not create or retain another package manager's lockfile.
 10. Ask only for choices that materially differ from the remaining defaults:
    - Better Auth enabled
@@ -112,10 +114,10 @@ Start with latest stable releases. When a verified incompatibility blocks a requ
    pnpm dlx skills add https://github.com/cloudflare/skills --list
    ```
 
-4. Install the focused Workers baseline at project scope for Codex in every generated application:
+4. Identify the active agent from session context. In the commands below, set `<agent>` to `codex` or `claude-code`; verify supported identifiers with the Skills CLI help. Install for both only when requested. Install the focused Workers baseline at project scope:
 
    ```sh
-   pnpm dlx skills add https://github.com/cloudflare/skills --skill workers-best-practices wrangler --agent codex -y
+   pnpm dlx skills add https://github.com/cloudflare/skills --skill workers-best-practices wrangler --agent <agent> -y
    ```
 
 5. Add only skills justified by requirements already in scope:
@@ -131,12 +133,12 @@ Start with latest stable releases. When a verified incompatibility blocks a requ
 6. When auth is enabled, install Better Auth's security skill:
 
    ```sh
-   pnpm dlx skills add https://github.com/better-auth/skills --skill better-auth-security-best-practices --agent codex -y
+   pnpm dlx skills add https://github.com/better-auth/skills --skill better-auth-security-best-practices --agent <agent> -y
    ```
 
    Add `email-and-password-best-practices`, `organization-best-practices`, or `two-factor-authentication-best-practices` only when the corresponding feature is already requested. Do not install generic `create-auth` or `better-auth-best-practices`; `$integrate-cf-auth` owns the CF/D1 integration and reads current Better Auth documentation directly.
-7. Do not pass `-g` or `--global`. Verify that the installer placed the selected skills in `.agents/skills/` for Codex and that `skills-lock.json` records only those skills.
-8. Let the installer manage `.agents/skills/`; do not copy upstream skill contents into custom CF skill folders.
+7. Do not pass `-g` or `--global`. Verify the selected agent can discover the installed skills (`.agents/skills/` for Codex, `.claude/skills/` for Claude Code, including installer-managed links) and that `skills-lock.json` records only the selected skills. Consult https://github.com/vercel-labs/skills for current agent support.
+8. Let the installer manage the selected agent skill directories; do not copy upstream skill contents into custom CF skill folders.
 
 ### Help users view local test emails
 
@@ -170,7 +172,8 @@ Read [project-contract.md](references/project-contract.md) and implement every a
 - Include the project contract's continued CF skill-use section in both collaboration styles, respecting explicit project exclusions. Verify that the generated guidance names each relevant skill and requires reading it before implementation and when scope changes.
 - Generate the collaboration section selected during setup: omit it entirely for Developer mode; append the exact Guided builder section from the project contract for Guided mode.
 - In Guided mode, include the one-message `ENGINE ROOM:` technical-response override exactly as defined in the project contract.
-- Keep Git pushes, deployments, secrets, provisioning, and remote migrations explicitly authorized even in Guided mode.
+- Follow the selected collaboration policy: Guided builder automatically backs up verified work without publishing unapproved changes; Developer retains Git control. Honor explicit restrictions in either style.
+- Verify project instructions load in the active agent using the contract's shared `AGENTS.md` / Claude import rule.
 
 For Better Auth, inspect the current CLI and TanStack integration docs before writing integration code:
 

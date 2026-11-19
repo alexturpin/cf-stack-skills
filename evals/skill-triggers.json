@@ -117,5 +117,15 @@
       "Diagnose why the deployed Worker cannot see its D1 binding."
     ],
     "negative": ["Refactor this local form component."]
+  },
+  "setup-cf-workspace": {
+    "positive": [
+      "Help me get my computer and GitHub account ready to build my first CF app.",
+      "I want to publish but have not set up a Cloudflare account or Wrangler authentication."
+    ],
+    "negative": [
+      "Add a field to this existing Mantine form.",
+      "Deploy this app using its already configured accounts and release workflow."
+    ]
   }
 }

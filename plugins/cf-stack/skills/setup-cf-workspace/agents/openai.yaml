@@ -1,0 +1,4 @@
+interface:
+  display_name: "CF Stack: Set Up Workspace"
+  short_description: "Prepare development tools and accounts"
+  default_prompt: "Use $setup-cf-workspace to prepare my computer and accounts for CF Stack development."

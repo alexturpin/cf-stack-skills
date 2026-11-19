@@ -7,6 +7,8 @@ description: Set up GitHub Actions deployment on main pushes, prepare or run rel
 
 Use the locally installed Wrangler CLI and maintained Cloudflare skills. When asked to set up deployment, create or update GitHub Actions automation for pushes to `main` unless the user specifies another release trigger.
 
+Use `$setup-cf-workspace` when GitHub or Cloudflare account/authentication prerequisites are missing. In Guided builder, explain before enabling CI that pushing to the release branch publishes changes. Keep backup work on a non-deploying branch until publication is requested; inspect all hosting integrations, not only GitHub Actions.
+
 ## Ground the release
 
 1. Read `package.json`, the lockfile, Wrangler config, generated binding types, deployment adapter, environment files, migrations, CI, and recent deployment conventions.

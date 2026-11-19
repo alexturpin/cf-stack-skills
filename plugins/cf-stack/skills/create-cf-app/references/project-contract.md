@@ -86,6 +86,8 @@ Generate a short `AGENTS.md` that lists:
 
 Do not copy framework documentation into `AGENTS.md`.
 
+Keep `AGENTS.md` authoritative for both agents. In Claude Code, verify it loads in the current session; when it does not, add `@AGENTS.md` to a root `CLAUDE.md`, preserving existing content. Use the import rather than copying the instructions. Follow https://code.claude.com/docs/en/memory for current loading behavior. Verify loading again in the next session if a restart is required.
+
 ### Commit messages
 
 Include this section in generated `AGENTS.md` for both collaboration styles:
@@ -114,6 +116,7 @@ This project uses CF Stack. At the start of each task, identify and read the app
 
 | Work | Required skill |
 |---|---|
+| Development tools, GitHub setup, or Cloudflare account prerequisites | `cf-stack:setup-cf-workspace` |
 | Mantine UI, date/time pickers, layouts, navigation, feedback | `cf-stack:build-cf-ui` |
 | Form state, field adapters, validation, submission | `cf-stack:build-cf-forms` |
 | Routes, loaders, server functions, Query hydration | `cf-stack:build-cf-routes` |
@@ -149,13 +152,19 @@ The primary user prefers guided product development.
 - Implement requested features rather than giving the user technical setup instructions.
 - Make routine implementation and architecture decisions using the repository conventions.
 - Ask the user about product behavior, visual preferences, accounts, credentials, costs, and irreversible decisions.
-- Keep the application runnable, start the development server when visual review is useful, and provide the local URL.
+- Ask about the intended product and visual direction before the first visual implementation. Show an early working preview and iterate before polishing the whole application.
+- Own the development server during active work: start it, verify the local URL, restart it when needed, and check it when resuming. Provide a clickable preview URL.
+- Keep brief project progress notes with decisions, unresolved questions, and the next step; link them from `AGENTS.md` for resumed sessions.
 - Validate completed work and explain what changed, what was verified, and what remains.
-- When the user asks to publish, share, or go live, use the repository's validated deployment workflow.
-- Do not push, deploy, modify secrets, provision resources, or migrate remote data unless the user explicitly asks for that external action.
+- Explain the backup and publishing workflow in plain language when establishing it. Automatically commit and push completed, verified work as a backup, honoring any explicit request to leave work uncommitted or unpushed. Preserve unrelated work and never force-push.
+- Before pushing, inspect CI and hosting integrations to determine whether the target branch deploys. Keep unapproved work on a branch that does not trigger deployment; if no such branch is available, keep the commit local until a safe backup path is configured.
+- Before enabling automatic deployment, explain that pushing to the release branch publishes changes and obtain authorization to enable that workflow. A backup is not approval to publish.
+- When the user asks to publish, share, or go live, use the repository's validated deployment workflow, including the necessary commit, merge, and push. Clarify the target when a preview and production release would have materially different consequences.
+- Obtain authorization for paid services, domain/DNS changes, and production resource or secret changes outside the requested release. Honor standing authorization for the configured CI deployment and migrations without asking repeatedly.
+- End with what changed, what was verified, where to view it, and whether it is saved locally, backed up, or published.
 ```
 
-Do not add automatic commit instructions in either mode. A publish request may create a sensible commit after validation as part of the explicitly requested delivery workflow.
+Developer leaves commits and pushes to the user unless explicitly delegated. Guided builder includes the automatic backup policy above; it is not a separate opt-in mode. Explicit user restrictions take precedence in both styles.
 
 ## Navigation and feedback
 

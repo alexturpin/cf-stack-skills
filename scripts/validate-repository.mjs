@@ -18,6 +18,7 @@ const expectedSkills = [
   "maintain-cf-tooling",
   "manage-cf-data",
   "migrate-cf-project",
+  "setup-cf-workspace",
   "update-cf-skills",
 ];
 
@@ -82,7 +83,7 @@ for (const phrase of [
   "The primary user prefers guided product development.",
   "When a message begins with `ENGINE ROOM:`",
   "Apply this override to that message only",
-  "Do not push, deploy, modify secrets, provision resources, or migrate remote data unless the user explicitly asks",
+  "Automatically commit and push completed, verified work as a backup",
 ]) {
   if (!projectContract.includes(phrase)) fail(`project contract is missing guided behavior: ${phrase}`);
 }

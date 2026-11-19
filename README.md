@@ -4,6 +4,17 @@ An installable skill suite for Codex and Claude Code for building opinionated ap
 
 The plugin contains integration policy and repeatable workflows. It deliberately delegates framework API reference material to maintained package skills, CLIs, and upstream `llms.txt` indexes.
 
+<details>
+<summary>AGENTS: start here</summary>
+
+When a user points you here to start building, identify the active agent and inspect the existing CF Stack installation before changing it. Use the installation instructions below for Codex or Claude Code; preserve an existing marketplace source and scope. Install the plugin, verify it is discoverable, and help the user start a new session if required. Reading this repository is not a persistent installation.
+
+Then use `cf-stack:setup-cf-workspace` for missing tools or accounts and `cf-stack:create-cf-app` for the application. If the plugin is not yet loaded, read [the setup skill](plugins/cf-stack/skills/setup-cf-workspace/SKILL.md) and [the creation skill](plugins/cf-stack/skills/create-cf-app/SKILL.md) directly for the current session. Ask what the user wants to make and establish the collaboration style only if not already specified. For visual products, discuss the look and feel before the first preview.
+
+Work in a separate application folder, not this skill repository. Reuse working setup, defer Cloudflare onboarding until publishing is needed, and keep project instructions discoverable by the active agent. Use plain-language guidance for human-only account or workspace steps.
+
+</details>
+
 ## Install
 
 ```sh
@@ -35,7 +46,7 @@ To enable it for a project, commit this to the project's `.claude/settings.json`
 }
 ```
 
-The Claude manifest has no `version`, so an install tracks commits that touch `plugins/cf-stack`. Refresh with `claude plugin marketplace update cf-stack-skills` and `claude plugin update cf-stack@cf-stack-skills`. Skill text mentions `$skill-name` and Codex in places; in Claude Code read those as the `cf-stack:skill-name` skill and the current agent.
+The Claude manifest has no `version`, so an install tracks commits that touch `plugins/cf-stack`. Refresh with `claude plugin marketplace update cf-stack-skills` and `claude plugin update cf-stack@cf-stack-skills`. Skill references such as `$create-cf-app` identify the same shared skill exposed as `cf-stack:create-cf-app` in Claude Code. Setup and updates select the active agent's commands and skill locations.
 
 ## Update
 
@@ -72,7 +83,7 @@ After a complete, validated migration it records the reviewed commit and any exc
 
 ## Create a new application
 
-Start the Codex task from the parent directory where new applications should live, or ensure Codex can write there. Invoke the skill explicitly or ask naturally:
+Start the agent session from the parent directory where new applications should live, or ensure the agent can write there. Use `setup-cf-workspace` first when development tools or accounts need setup. Invoke the skill explicitly or ask naturally:
 
 ```text
 Use $create-cf-app to create a new application.
@@ -80,7 +91,7 @@ Use $create-cf-app to create a new application.
 
 If the request does not already include them, the skill asks for the application name, parent directory, and collaboration style. It converts the name to a kebab-case folder/package name, shows the absolute target path, verifies the destination is absent or empty, and then runs the TanStack CLI to create that directory and configure the stack.
 
-Choose **Developer** for concise technical collaboration with Git and releases left to you; this adds no collaboration section to the generated `AGENTS.md`. Choose **Guided builder** for plain-language updates, routine technical decisions made by Codex, and a runnable application for visual review. Guided mode still requires an explicit request before Codex pushes, deploys, changes secrets, provisions resources, or migrates remote data.
+Choose **Developer** for concise technical collaboration with Git and releases left to you; this adds no collaboration section to the generated `AGENTS.md`. Choose **Guided builder** for plain-language updates, agent-owned implementation and previews, and automatic commits and backups of verified work. The agent explains when a push would publish, keeps unapproved work on a non-deploying branch, and publishes when requested. Explicit instructions to leave work uncommitted or unpushed take precedence. Paid services and domain changes still need authorization.
 
 Guided projects also recognize `ENGINE ROOM:` at the start of a message as a one-message codeword for a concise, peer-to-peer technical answer. It does not change the saved collaboration style or authorize external actions.
 

@@ -38,8 +38,8 @@ async function put(path, contents = "") {
   await writeFile(target, contents);
 }
 
-function runAudit() {
-  return spawnSync(process.execPath, [auditPath, "--no-auth", "--developer"], {
+function runAudit(style = "--developer") {
+  return spawnSync(process.execPath, [auditPath, "--no-auth", style], {
     cwd: fixture,
     encoding: "utf8",
   });
@@ -119,6 +119,20 @@ try {
   if (passing.stderr.includes("migrations_pattern")) {
     throw new Error(`top-level SQL should not require migrations_pattern\n${passing.stderr}`);
   }
+
+  const baseInstructions = await readFile(join(fixture, "AGENTS.md"), "utf8");
+  const contract = await readFile(join(repositoryRoot, "plugins/cf-stack/skills/create-cf-app/references/project-contract.md"), "utf8");
+  const guided = contract.match(/```md\n(## Collaboration style[\s\S]*?)\n```/)?.[1];
+  if (!guided) throw new Error("missing guided contract fixture");
+  await put("AGENTS.md", `${baseInstructions}\n${guided}\n`);
+  const guidedResult = runAudit("--guided");
+  if (guidedResult.status !== 0) throw new Error(`guided contract failed\n${guidedResult.stderr}`);
+  for (const safety of ["Keep unapproved work on a branch that does not trigger deployment", "A backup is not approval to publish"]) {
+    await put("AGENTS.md", `${baseInstructions}\n${guided.replace(safety, "")}\n`);
+    const unsafe = runAudit("--guided");
+    if (unsafe.status === 0 || !unsafe.stderr.includes(safety)) throw new Error(`missing publishing boundary should fail: ${safety}`);
+  }
+  await put("AGENTS.md", baseInstructions);
 
   for (const dependency of ["@mantine/dates", "dayjs"]) {
     const incomplete = structuredClone(manifest);

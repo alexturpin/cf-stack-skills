@@ -1,4 +1,7 @@
 const urls = [
+  "https://github.com/vercel-labs/skills",
+  "https://code.claude.com/docs/en/memory",
+  "https://code.claude.com/docs/en/discover-plugins",
   "https://github.com/alexturpin/cf-stack-skills",
   "https://nodejs.org/dist/index.json",
   "https://tanstack.com/start/v1/llms.txt",
