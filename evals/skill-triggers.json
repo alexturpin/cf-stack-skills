@@ -121,6 +121,7 @@
   "setup-cf-workspace": {
     "positive": [
       "Help me get my computer and GitHub account ready to build my first CF app.",
+      "Help me buy a domain on Cloudflare or connect and optionally transfer my existing domain.",
       "I want to publish but have not set up a Cloudflare account or Wrangler authentication."
     ],
     "negative": [

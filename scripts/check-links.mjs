@@ -1,4 +1,6 @@
 const urls = [
+  "https://developers.cloudflare.com/registrar/",
+  "https://developers.cloudflare.com/registrar/get-started/transfer-domain-to-cloudflare/",
   "https://github.com/vercel-labs/skills",
   "https://code.claude.com/docs/en/memory",
   "https://code.claude.com/docs/en/discover-plugins",

@@ -1,6 +1,6 @@
 ---
 name: setup-cf-workspace
-description: Prepare a computer and accounts for CF Stack development. Use for first-time onboarding, missing Git/Node/pnpm tools, GitHub account or repository setup, opening an agent workspace, or Cloudflare account/authentication prerequisites. Does not scaffold the app or deploy it.
+description: Prepare a computer and accounts for CF Stack development. Use for first-time onboarding, missing Git/Node/pnpm tools, GitHub account or repository setup, opening an agent workspace, Cloudflare account/authentication prerequisites, or custom domain registration, connection, and transfer setup. Does not scaffold the app or deploy it.
 ---
 
 # Set up a CF workspace
@@ -40,6 +40,15 @@ Done when the tools run and the agent can work in the intended location. Verify 
 4. Hand off to `deploy-cf-app` for resources, CI credentials, and deployment. Explain the publishing branch and public visibility before enabling automatic deployment. Account setup alone does not authorize a release or DNS change.
 
 Done when authentication to the intended account is verified. Deployment readiness and the first live release are verified by `deploy-cf-app`.
+
+## Connect a custom domain when requested
+
+- Ask whether the user owns a domain and identify its registrar and DNS provider. Explain registration (ownership), DNS (routing), and hosting only as needed for the decision.
+- For a new domain, prefer Cloudflare Registrar when the extension and domain are supported. Check current registration and renewal pricing and requirements before purchase; explain the requirement to use Cloudflare authoritative DNS. Use https://developers.cloudflare.com/registrar/ for current guidance.
+- For an existing domain, prioritize connecting it to the site. Offer transferring registration to Cloudflare as an optional simplification; explain current eligibility, transfer cost, renewal effects, and timing. Registration transfer is not required to launch. Follow https://developers.cloudflare.com/registrar/get-started/transfer-domain-to-cloudflare/ rather than assuming every registrar or extension follows the same process.
+- Before a DNS cutover, preserve and review the complete existing records, especially email records; do not assume automatic discovery found everything. Check DNSSEC requirements, prepare a rollback path, and keep existing hosting available until the new site works.
+- Obtain approval for the specific purchase, transfer, or DNS cutover before acting. Account setup or a general request to publish does not authorize these actions. Perform authorized work with available tools and give concise instructions for human-only steps.
+- Verify the domain resolves to the intended site, HTTPS works, and relevant email records remain intact. Report a pending transfer separately from a completed site launch; do not claim success based only on submission.
 
 ## Preserve continuity
 

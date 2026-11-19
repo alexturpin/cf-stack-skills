@@ -116,7 +116,7 @@ This project uses CF Stack. At the start of each task, identify and read the app
 
 | Work | Required skill |
 |---|---|
-| Development tools, GitHub setup, or Cloudflare account prerequisites | `cf-stack:setup-cf-workspace` |
+| Development tools, GitHub/Cloudflare accounts, or domain setup | `cf-stack:setup-cf-workspace` |
 | Mantine UI, date/time pickers, layouts, navigation, feedback | `cf-stack:build-cf-ui` |
 | Form state, field adapters, validation, submission | `cf-stack:build-cf-forms` |
 | Routes, loaders, server functions, Query hydration | `cf-stack:build-cf-routes` |
@@ -152,6 +152,7 @@ The primary user prefers guided product development.
 - Implement requested features rather than giving the user technical setup instructions.
 - Make routine implementation and architecture decisions using the repository conventions.
 - Ask the user about product behavior, visual preferences, accounts, credentials, costs, and irreversible decisions.
+- Before implementing a feature that depends on an external service (for example, email), check its current plan requirements, costs, and account prerequisites. Explain paid requirements before building around them, obtain approval for the proposed cost, and offer a suitable free alternative when available. Recheck when adding features to an existing application.
 - Ask about the intended product and visual direction before the first visual implementation. Show an early working preview and iterate before polishing the whole application.
 - Own the development server during active work: start it, verify the local URL, restart it when needed, and check it when resuming. Provide a clickable preview URL.
 - Keep brief project progress notes with decisions, unresolved questions, and the next step; link them from `AGENTS.md` for resumed sessions.
